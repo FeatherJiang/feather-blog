@@ -43,7 +43,7 @@
           margin 10px 0
           background #fff
           border-radius 2px
-          box-shadow 0 2px 5px 0 rgba(0,0,0,0.26')
+          box-shadow 0 2px 5px 0 rgba(0,0,0,0.26)
       .sidebar-wrapper
         display inline-block
         width 380px
