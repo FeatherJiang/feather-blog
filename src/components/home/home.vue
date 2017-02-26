@@ -5,9 +5,14 @@
     </div>
     <div class="container">
       <div class="main-wrapper">
-        <transition-group tag="div" name="init">
-          <v-article v-for="n in 10" :key="n"></v-article>
+        <transition-group name="init">
+          <router-link tag="div" to="article" v-for="n in 10" :key="n">
+            <profile></profile>
+          </router-link>
         </transition-group>
+        <div class="loading-wrapper">
+          <loading></loading>
+        </div>
       </div>
       <div class="sidebar-wrapper">
         <sidebar v-for="title in sidebars" :title="title"></sidebar>
@@ -17,8 +22,9 @@
 </template>
 <script>
   import banner from 'components/banner/banner'
-  import article from 'components/article/article'
+  import profile from 'components/profile/profile'
   import sidebar from 'components/sidebar/sidebar'
+  import loading from 'components/loading/loading'
 
   export default {
     data () {
@@ -28,8 +34,9 @@
     },
     components: {
       banner: banner,
-      'v-article': article,
-      sidebar: sidebar
+      profile: profile,
+      sidebar: sidebar,
+      loading: loading
     }
   }
 </script>
@@ -44,13 +51,12 @@
       font-size 0
       .main-wrapper
         display inline-block
-        .article
+        .profile
           margin 10px 0
           .init-enter-active, .init-leave-active
             transition all 0.5s ease
           .init-enter, .init-leave-active
             opacity 0
-            bottom 0
       .sidebar-wrapper
         display inline-block
         vertical-align top

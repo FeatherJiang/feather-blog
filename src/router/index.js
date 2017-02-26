@@ -6,6 +6,7 @@ import technology from 'components/technology/technology'
 import life from 'components/life/life'
 import aboutme from 'components/aboutme/aboutme'
 import contact from 'components/contact/contact'
+import article from 'components/article/article'
 
 Vue.use(Router)
 
@@ -39,6 +40,11 @@ export default new Router({
       path: '/contact',
       name: 'contact',
       component: contact
+    },
+    {
+      path: '/article',
+      name: 'article',
+      component: article
     }
   ]
 })

@@ -4,8 +4,9 @@
       <v-nav></v-nav>
     </div>
     <transition name="switch">
-      <router-view>
-      </router-view>
+      <keep-alive>
+        <router-view></router-view>
+      </keep-alive>
     </transition>
   </div>
 </template>
@@ -33,7 +34,7 @@
     .switch-enter-active, .switch-leave-active
       transition all 0.5s ease
     .switch-enter
-      transform translate(100%, 0)
+      transform translateX(100%)
     .switch-leave-active
-      transform translate(-100%, 0)
+      transform translateX(-100%)
 </style>
