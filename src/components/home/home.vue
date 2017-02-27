@@ -14,13 +14,14 @@
           <loading></loading>
         </div>
       </div>
-      <div class="sidebar-wrapper">
+      <div class="sidebar-wrapper" :class="{'fixed': fixed}">
         <sidebar v-for="title in sidebars" :title="title"></sidebar>
       </div>
     </div>
   </div>
 </template>
 <script>
+  import {bus} from '../../assets/js/bus.js'
   import banner from 'components/banner/banner'
   import profile from 'components/profile/profile'
   import sidebar from 'components/sidebar/sidebar'
@@ -29,8 +30,22 @@
   export default {
     data () {
       return {
-        sidebars: ['TOPIC', 'TAG']
+        sidebars: ['TOPIC', 'TAG'],
+        fixed: false
       }
+    },
+    methods: {
+      homeScroll () {
+        bus.$emit('homeScroll', window.scrollY)
+        if (window.scrollY >= 250) {
+          this.fixed = true
+        } else {
+          this.fixed = false
+        }
+      }
+    },
+    created () {
+      window.addEventListener('scroll', this.homeScroll)
     },
     components: {
       banner: banner,
@@ -62,6 +77,9 @@
         vertical-align top
         width 380px
         margin-left 20px
+        &.fixed
+          position fixed
+          top 56px
         .sidebar
           margin 10px 0
 </style>

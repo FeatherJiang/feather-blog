@@ -17,6 +17,11 @@
 
   export default {
     name: 'app',
+    data () {
+      return {
+        scrollList: []
+      }
+    },
     components: {
       'v-nav': nav,
       home: home
@@ -31,10 +36,12 @@
       z-index 100
       top 0
       width 100%
-    .switch-enter-active, .switch-leave-active
-      transition all 0.5s ease
-    .switch-enter
-      transform translateX(100%)
-    .switch-leave-active
-      transform translateX(-100%)
+  .switch-enter-active, .switch-leave-active
+    transition all 0.5s
+  .switch-enter
+    position absolute
+    transform translate(100%, 0)
+  .switch-leave-active
+    position absolute
+    transform translate(-100%, 0)
 </style>

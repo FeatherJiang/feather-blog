@@ -11,6 +11,7 @@ import article from 'components/article/article'
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',
@@ -46,5 +47,8 @@ export default new Router({
       name: 'article',
       component: article
     }
-  ]
+  ],
+  scrollBehavior (to, from, savedPosition) {
+    return savedPosition
+  }
 })
