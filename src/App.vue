@@ -40,8 +40,10 @@
     transition all 0.5s
   .switch-enter
     position absolute
+    top 56pxs
     transform translate(100%, 0)
   .switch-leave-active
     position absolute
+    top 56px
     transform translate(-100%, 0)
 </style>

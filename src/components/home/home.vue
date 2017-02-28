@@ -10,13 +10,19 @@
             <profile></profile>
           </router-link>
         </transition-group>
-        <div class="loading-wrapper">
-          <loading></loading>
+        <div class="loading-wrapper" @click="getMore">
+          <div class="more" v-show="showMore">
+            more
+          </div>
+          <loading v-show="!showMore"></loading>
         </div>
       </div>
       <div class="sidebar-wrapper" :class="{'fixed': fixed}">
         <sidebar v-for="title in sidebars" :title="title"></sidebar>
       </div>
+    </div>
+    <div class="backtotop-wrapper">
+      <backtotop></backtotop>
     </div>
   </div>
 </template>
@@ -26,12 +32,14 @@
   import profile from 'components/profile/profile'
   import sidebar from 'components/sidebar/sidebar'
   import loading from 'components/loading/loading'
+  import backtotop from 'components/backtotop/backtotop'
 
   export default {
     data () {
       return {
         sidebars: ['TOPIC', 'TAG'],
-        fixed: false
+        fixed: false,
+        showMore: true
       }
     },
     methods: {
@@ -42,6 +50,9 @@
         } else {
           this.fixed = false
         }
+      },
+      getMore () {
+        this.showMore = false
       }
     },
     created () {
@@ -51,7 +62,8 @@
       banner: banner,
       profile: profile,
       sidebar: sidebar,
-      loading: loading
+      loading: loading,
+      backtotop: backtotop
     }
   }
 </script>
@@ -68,6 +80,21 @@
         display inline-block
         .profile
           margin 10px 0
+        .loading-wrapper
+          margin 10px 0
+          padding 5px 0
+          background #fff
+          border-radius 2px
+          box-shadow 0 2px 5px 0 rgba(0,0,0,0.26)
+          cursor pointer
+          .more
+            margin 0 auto
+            line-height 25px
+            font-size 20px
+            text-align center
+            color #4285f4
+          .loading
+            margin 0 auto
           .init-enter-active, .init-leave-active
             transition all 0.5s ease
           .init-enter, .init-leave-active
@@ -82,4 +109,9 @@
           top 56px
         .sidebar
           margin 10px 0
+    .backtotop-wrapper
+      position fixed
+      left 50%
+      bottom 50px
+      margin-left 220px
 </style>

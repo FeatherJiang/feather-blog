@@ -15,12 +15,16 @@
         <sidebar v-for="title in sidebars" :title="title"></sidebar>
       </div>
     </div>
+    <div class="backtotop-wrapper">
+      <backtotop></backtotop>
+    </div>
   </div>
 </template>
 <script>
   import profile from 'components/profile/profile'
   import sidebar from 'components/sidebar/sidebar'
   import loading from 'components/loading/loading'
+  import backtotop from 'components/backtotop/backtotop'
 
   export default {
     data () {
@@ -44,7 +48,8 @@
     components: {
       profile: profile,
       sidebar: sidebar,
-      loading: loading
+      loading: loading,
+      backtotop: backtotop
     }
   }
 </script>
@@ -75,4 +80,9 @@
           top 56px
         .sidebar
           margin 10px 0
+    .backtotop-wrapper
+      position fixed
+      left 50%
+      bottom 50px
+      margin-left 220px
 </style>

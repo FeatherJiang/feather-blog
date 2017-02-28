@@ -48,6 +48,7 @@ export default new Router({
       component: article
     }
   ],
+  transitionOnLoad: false,
   scrollBehavior (to, from, savedPosition) {
     return savedPosition
   }

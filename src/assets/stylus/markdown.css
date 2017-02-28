@@ -386,7 +386,7 @@
 }
 
 .markdown li {
-  list-style: circle;
+  list-style: disc;
 }
 
 .markdown li>p {

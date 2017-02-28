@@ -5,11 +5,14 @@
         <div class="main">
           <markdown :text="text"></markdown>
           <div class="footer">
-            <span class="back"><i class="fa fa-chevron-left"></i></span>
             <span class="browse"><i class="fa fa-eye"></i>123</span>
             <span class="comment"><i class="fa fa-comments"></i>123</span>
             <span class="like"><i class="fa fa-star"></i>213</span>
             <span class="time"><i class="fa fa-calendar"></i>2016-5-3</span>
+          </div>
+          <div class="btn-wrapper">
+            <span class="back" @click="back"><i class="fa fa-chevron-left"></i></span>
+            <span class="star"><i class="fa" :class="{'fa-star': isStar, 'fa-star-o': !isStar}"></i></span>
           </div>
         </div>
       </div>
@@ -17,13 +20,23 @@
         <sidebar v-for="title in sidebars" :title="title"></sidebar>
       </div>
     </div>
+    <div class="backtotop-wrapper">
+      <backtotop></backtotop>
+    </div>
   </div>
 </template>
 <script>
   import sidebar from 'components/sidebar/sidebar'
+  import backtotop from 'components/backtotop/backtotop'
   import markdown from 'components/markdown/markdown'
 
   export default {
+    props: {
+      isStar: {
+        type: Boolean,
+        default: false
+      }
+    },
     data () {
       return {
         sidebars: ['TOPIC', 'TAG'],
@@ -38,6 +51,9 @@
         } else {
           this.fixed = false
         }
+      },
+      back () {
+        window.history.back()
       }
     },
     created () {
@@ -45,6 +61,7 @@
     },
     components: {
       sidebar: sidebar,
+      backtotop: backtotop,
       markdown: markdown
     }
   }
@@ -69,8 +86,58 @@
           border-radius 2px
           box-shadow 0 2px 5px 0 rgba(0,0,0,0.26)
           .footer
+            text-align right
             span
+              display inline-block
+              margin-right 10px
               font-size 14px
+              color #7e8c8d
+              cursor pointer
+              &:last-child
+                margin-right 20px
+              &:hover
+                color #4285f4
+              i
+                display inline-block
+                margin-right 4px
+      .btn-wrapper
+        padding  10px 20px
+        text-align left
+        .back
+          display inline-block
+          width 50px
+          height 30px
+          margin-right 20px
+          text-align center
+          background #f7f7f7
+          border-radius 2px
+          box-shadow 0 2px 5px 0 rgba(0,0,0,0.26)
+          cursor pointer
+          transition all 0.2s ease
+          &:hover
+            color #fff
+            background #4285f4
+          i
+            margin-left -4px
+            line-height 32px
+            font-size 20px
+        .star
+          display inline-block
+          width 50px
+          height 30px
+          vertical-align top
+          text-align center
+          background #f7f7f7
+          border-radius 2px
+          box-shadow 0 2px 5px 0 rgba(0,0,0,0.26)
+          cursor pointer
+          transition all 0.5s ease
+          &:hover
+            color #fff
+            background #4285f4
+          i
+            line-height 30px
+            font-size 20px
       .sidebar-wrapper
         display inline-block
         width 380px
@@ -82,4 +149,9 @@
           top 56px
         .sidebar
           margin 10px 0
+    .backtotop-wrapper
+      position fixed
+      left 50%
+      bottom 50px
+      margin-left 220px
 </style>
