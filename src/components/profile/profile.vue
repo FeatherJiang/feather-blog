@@ -73,7 +73,6 @@
         height 65px
         line-height 18px
         font-size 14px
-        color #7e8c8d
         overflow hidden
       .meta
         font-size 0

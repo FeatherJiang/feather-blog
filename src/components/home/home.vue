@@ -70,7 +70,6 @@
 <style lang="stylus" rel="stylesheet/stylus">
   .home
     width 100%
-    margin-top 56px
     .container
       width 1200px
       max-width 1200px

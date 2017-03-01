@@ -3,6 +3,7 @@
     <div class="nav-wrapper">
       <v-nav></v-nav>
     </div>
+    <div class="empty"></div>
     <transition name="switch">
       <keep-alive>
         <router-view></router-view>
@@ -36,6 +37,8 @@
       z-index 100
       top 0
       width 100%
+    .empty
+      height 56px
   .switch-enter-active, .switch-leave-active
     transition all 0.5s
   .switch-enter

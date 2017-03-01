@@ -1,5 +1,5 @@
 <template>
-  <transition name="fade">
+  <transition name="backfade">
     <div class="backtotop" @click="backToTop" v-show="showToTop">
       <i class="fa fa-chevron-up"></i>
     </div>
@@ -34,7 +34,7 @@
     },
     created () {
       window.addEventListener('scroll', () => {
-        if (window.scrollY <= 200) {
+        if (window.scrollY <= 300) {
           this.showToTop = false
         } else {
           this.showToTop = true
@@ -60,8 +60,8 @@
     i
       line-height 40px
       font-size 20px
-  .fade-enter, .fade-leave-active
+  .backfade-enter-active, .backfade-leave-active
     transition all 0.5
-  .fade-enter-active, .fade-leave-active
+  .backfade-enter, .backfade-leave-active
     opacity 0
 </style>

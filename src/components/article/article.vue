@@ -15,6 +15,12 @@
             <span class="star"><i class="fa" :class="{'fa-star': isStar, 'fa-star-o': !isStar}"></i></span>
           </div>
         </div>
+        <div class="comment-wrapper">
+          <comment></comment>
+        </div>
+        <div class="commentitem-wrapper">
+          <commentitem></commentitem>
+        </div>
       </div>
       <div class="sidebar-wrapper" :class="{'fixed': fixed}">
         <sidebar v-for="title in sidebars" :title="title"></sidebar>
@@ -26,6 +32,8 @@
   </div>
 </template>
 <script>
+  import comment from 'components/comments/comments'
+  import commentitem from 'components/commentitem/commentitem'
   import sidebar from 'components/sidebar/sidebar'
   import backtotop from 'components/backtotop/backtotop'
   import markdown from 'components/markdown/markdown'
@@ -60,6 +68,8 @@
       window.addEventListener('scroll', this.articleScroll)
     },
     components: {
+      comment: comment,
+      commentitem: commentitem,
       sidebar: sidebar,
       backtotop: backtotop,
       markdown: markdown
@@ -69,7 +79,6 @@
 <style lang="stylus" rel="stylesheet/stylus">
   .article
     width 100%
-    margin-top 56px
     .container
       width 1200px
       max-width 1200px
@@ -100,6 +109,12 @@
               i
                 display inline-block
                 margin-right 4px
+        .comment-wrapper
+          margin 10px 0
+        .commentitem-wrapper
+          margin 10px 0
+          .commentitem
+            margin 10px 0
       .btn-wrapper
         padding  10px 20px
         text-align left
@@ -109,6 +124,7 @@
           height 30px
           margin-right 20px
           text-align center
+          color #4285f4
           background #f7f7f7
           border-radius 2px
           box-shadow 0 2px 5px 0 rgba(0,0,0,0.26)
@@ -127,6 +143,7 @@
           height 30px
           vertical-align top
           text-align center
+          color #4285f4
           background #f7f7f7
           border-radius 2px
           box-shadow 0 2px 5px 0 rgba(0,0,0,0.26)
