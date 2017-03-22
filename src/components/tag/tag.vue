@@ -1,14 +1,37 @@
 <template>
-  <span class="tag">
+  <span class="tag" @click.stop.prevent="queryTag">
     {{tag}}
   </span>
 </template>
 <script>
+  const OK = 1
+
   export default {
     props: {
       tag: {
         type: String,
         default: 'other'
+      }
+    },
+    methods: {
+      queryTag () {
+        let Vue = this
+        this.$http.post('/api/getTagType', {tag: this.tag})
+          .then(function (response) {
+            let res = response.data
+            if (res.code === OK) {
+              if (res.data === 0) {
+                Vue.$router.push({path: '/technology', query: {tag: Vue.tag}})
+              } else if (res.data === 1) {
+                Vue.$router.push({path: '/life', query: {tag: Vue.tag}})
+              } else if (res.data === 2) {
+                Vue.$router.push({path: '/technology', query: {tag: Vue.tag}})
+              }
+            }
+          })
+          .catch(function (err) {
+            console.log(err.toString())
+          })
       }
     }
   }

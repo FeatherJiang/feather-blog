@@ -1,11 +1,11 @@
 <template>
   <div class="banner">
     <div class="container" @mouseover="stopBanner" @mouseout="startBanner">
-      <div class="box1" ref="box1"><img :src="banner.imgs[3]"></div>
-      <div class="box2" ref="box2"><img :src="banner.imgs[4]"></div>
-      <div class="box3" ref="box3"><img :src="banner.imgs[0]"></div>
-      <div class="box4" ref="box4"><img :src="banner.imgs[1]"></div>
-      <div class="box5" ref="box5"><img :src="banner.imgs[2]"></div>
+      <a :href="banner[3].link" target="_blank" class="box1" ref="box1"><img :src="banner[3].img"></a>
+      <a :href="banner[4].link" target="_blank" class="box2" ref="box2"><img :src="banner[4].img"></a>
+      <a :href="banner[0].link" target="_blank" class="box3" ref="box3"><img :src="banner[0].img"></a>
+      <a :href="banner[1].link" target="_blank" class="box4" ref="box4"><img :src="banner[1].img"></a>
+      <a :href="banner[2].link" target="_blank" class="box5" ref="box5"><img :src="banner[2].img"></a>
       <div class="pre1" @click="preBanner2"></div>
       <div class="pre2" @click="preBanner1"></div>
       <div class="next1" @click="nextBanner1"></div>
@@ -26,13 +26,7 @@
   export default {
     props: {
       banner: {
-        type: Object,
-        default () {
-          return {
-            imgs: ['http://jiangfeather.com/imgs/login_bg.jpg', 'http://jiangfeather.com/imgs/helloadmin.png', 'http://jiangfeather.com/imgs/helloadmin.png', 'http://jiangfeather.com/imgs/helloadmin.png', 'http://jiangfeather.com/imgs/helloadmin.png'],
-            routerLink: []
-          }
-        }
+        type: Array
       }
     },
     data () {
@@ -158,6 +152,7 @@
       margin 10px auto 0
       .box1, .box2, .box3, .box4, .box5
         position absolute
+        display block
         background #fff
         border-radius 2px
         box-shadow 0 2px 5px 0 rgba(0,0,0,0.26)

@@ -1,22 +1,29 @@
 <template>
   <div class="commentitem">
     <div class="avatar">
-      <img src="../../assets/imgs/deep_space.png" alt="">
+      <img :src="comment.img" alt="">
     </div>
     <div class="comment-main">
       <div class="comment-content">
-        <span class="name">feather : </span>
-        <span class="text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, asperiores, at dignissimos dolor dolores eius eligendi eveniet explicabo fugiat illum libero magni minus nobis optio pariatur tenetur, voluptatum. Exercitationem, itaque. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad, consequuntur explicabo id illum ipsa quis ratione! Blanditiis commodi eligendi facilis fuga libero maiores molestias, nihil pariatur, quod, suscipit veritatis vero.</span>
+        <span class="name">{{comment.name}}: </span>
+        <span class="text">{{comment.comment}}</span>
       </div>
-      <div class="comment-time">2001-3-4 23:12</div>
+      <div class="comment-time">{{comment.date}}</div>
     </div>
   </div>
 </template>
 <script>
-
+  export default {
+    props: {
+      comment: {
+        type: Object
+      }
+    }
+  }
 </script>
 <style lang="stylus" rel="stylesheet/stylus">
   .commentitem
+    position relative
     padding 20px
     background #fff
     border-radius 2px
@@ -41,6 +48,9 @@
         .text
           font-size 14px
       .comment-time
+        position absolute
+        right 20px
+        bottom 8px
         text-align right
         font-size 14px
         color #7e8c8d

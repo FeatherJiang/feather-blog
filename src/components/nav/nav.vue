@@ -31,7 +31,7 @@
           {
             text: 'Life',
             routerLink: 'life',
-            subItems: ['Read', 'Music', 'Food', 'Travel']
+            subItems: ['Read', 'Music', 'Food']
           },
           {
             text: 'About Me',

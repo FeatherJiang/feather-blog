@@ -4,13 +4,15 @@
       <span class="nav-text">{{navItem.text}}</span>
       <transition name="fade">
         <ul class="nav-sub-list" @mouseout="hideSubList" v-show="subListShow && navItem.subItems.length">
-          <li class="nav-sub-item" v-for="subItem in navItem.subItems">{{subItem}}</li>
+          <li class="nav-sub-item" v-for="subItem in navItem.subItems" @click.stop="queryTag(subItem)">{{subItem}}</li>
         </ul>
       </transition>
     </div>
   </router-link>
 </template>
 <script>
+  const OK = 1
+
   export default {
     props: {
       navItem: {
@@ -28,6 +30,25 @@
       },
       hideSubList: function () {
         this.subListShow = false
+      },
+      queryTag (tag) {
+        let Vue = this
+        this.$http.post('/api/getTagType', {tag: tag})
+          .then(function (response) {
+            let res = response.data
+            if (res.code === OK) {
+              if (res.data === 0) {
+                Vue.$router.push({path: '/technology', query: {tag: tag}})
+              } else if (res.data === 1) {
+                Vue.$router.push({path: '/life', query: {tag: tag}})
+              } else if (res.data === 2) {
+                Vue.$router.push({path: '/technology', query: {tag: tag}})
+              }
+            }
+          })
+          .catch(function (err) {
+            console.log(err.toString())
+          })
       }
     }
   }

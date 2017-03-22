@@ -8,23 +8,82 @@
     <div class="info-wrapper">
       <div class="name-wrapper">
         <label for="name" class="text">name</label>
-        <input id="name" placeholder="required">
+        <input id="name" placeholder="required" v-model="comment.name">
       </div>
       <div class="email-wrapper">
         <label for="email" class="text">email</label>
-        <input id="email" placeholder="optional">
+        <input id="email" placeholder="optional" v-model="comment.email">
       </div>
     </div>
     <div class="text-wrapper">
       <label for="comment-content" class="text">comment</label>
-      <textarea name="comment" id="comment-content"></textarea>
+      <textarea name="comment" id="comment-content" v-model="comment.comment"></textarea>
     </div>
-    <span id="comment-btn">submit</span>
+    <div class="submit-wrapper">
+      <span id="comment-btn" @click="addComment">submit</span>
+      <transition name="slip">
+        <div class="hint" v-show="hintShow">{{text}}</div>
+      </transition>
+    </div>
   </div>
 </template>
 <script>
-  export default {
+  import {bus} from '../../assets/js/bus'
+  import {urlParse} from '../../assets/js/urlParse'
 
+  const OK = 1
+
+  export default {
+    data () {
+      return {
+        comment: {
+          articleId: '',
+          img: 'http://www.jiangfeather.com/images/imgAvatar.jpg',
+          name: '',
+          email: '',
+          comment: '',
+          date: ''
+        },
+        hintShow: false,
+        text: 'error'
+      }
+    },
+    methods: {
+      addComment () {
+        let Vue = this
+        let date = new Date()
+        let param = urlParse()
+        console.log(param)
+        if (param.id !== undefined) {
+          this.comment.articleId = param.id
+        }
+        this.comment.date = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes()
+        this.$http.post('/api/addComment', this.comment)
+          .then(function (response) {
+            let res = response.data
+            if (res.code === OK) {
+              bus.$emit('addComment', Vue.comment)
+              Vue.comment.name = ''
+              Vue.comment.email = ''
+              Vue.comment.comment = ''
+              Vue.hintShow = true
+              Vue.text = 'success'
+              setTimeout(function () {
+                Vue.hintShow = false
+              }, 2000)
+            } else {
+              Vue.hintShow = true
+              Vue.text = 'fail'
+              setTimeout(function () {
+                Vue.hintShow = false
+              }, 2000)
+            }
+          })
+          .catch(function (error) {
+            console.log(error.toString())
+          })
+      }
+    }
   }
 </script>
 <style lang="stylus" rel="stylesheet/stylus">
@@ -91,9 +150,11 @@
           height 22px
           font-size 14px
           text-indent 5px
+          background #f7f7f7
           border-radius 0 5px 5px 0
           box-sizing border-box
           &:focus
+            background #fff
             border 2px solid #4285f4
             border-left 0
             outline none
@@ -117,9 +178,11 @@
           height 22px
           font-size 14px
           text-indent 5px
+          background #f7f7f7
           border-radius 0 5px 5px 0
           box-sizing border-box
           &:focus
+            background #fff
             border 2px solid #4285f4
             border-left 0
             outline none
@@ -143,27 +206,59 @@
         height 50px
         padding 5px
         line-height 18px
+        background #f7f7f7
         border none
         border-radius 0 5px 5px 0
         box-sizing border-box
         &:focus
+          background #fff
           border 2px solid #4285f4
           border-left 0
           outline none
-    #comment-btn
+    .submit-wrapper
+      position relative
       vertical-align top
       display inline-block
+      height 30px
       margin 10px 0
-      padding 0 5px
-      line-height 30px
-      font-size 20px
-      color #4285f4
-      background #f7f7f7
-      border-radius 5px
-      box-shadow 0 2px 5px 0 rgba(0,0,0,0.26)
-      cursor pointer
-      transition all 0.5s ease
-      &:hover
-        color #f7f7f7
-        background #4285f4
+      text-align center
+      #comment-btn
+        position: absolute;
+        z-index 2
+        top 0
+        left 50%
+        width 80px
+        height 30px
+        text-align center
+        line-height 30px
+        font-size 18px
+        color #4285f4
+        background #f7f7f7
+        border none
+        border-radius 5px
+        box-shadow 0 2px 5px 0 rgba(0,0,0,0.26)
+        transition all 0.5s ease
+        cursor pointer
+        &:hover
+          color #f7f7f7
+          background #4285f4
+      .hint
+        position absolute
+        z-index 1
+        top 30px
+        left 50%
+        width 60px
+        height 20px
+        margin 0 0 0 10px
+        text-align center
+        line-height 20px
+        font-size 16px
+        color #f92452
+        background #f7f7f7
+        border-radius 0 0 5px 5px
+        box-shadow 0 2px 5px 0 rgba(0,0,0,0.26)
+      .slip-enter-active, .slip-leave-active
+        transition all 0.5s
+      .slip-enter, .slip-leave-active
+        transform translate(0,-30px)
 </style>

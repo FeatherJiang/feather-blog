@@ -1,14 +1,14 @@
 <template>
   <div class="article">
     <div class="container">
-      <div class="main-wrapper">
+      <div class="main-wrapper" v-if="article">
         <div class="main">
           <markdown :text="text"></markdown>
           <div class="footer">
-            <span class="browse"><i class="fa fa-eye"></i>123</span>
-            <span class="comment"><i class="fa fa-comments"></i>123</span>
-            <span class="like"><i class="fa fa-star"></i>213</span>
-            <span class="time"><i class="fa fa-calendar"></i>2016-5-3</span>
+            <span class="browse"><i class="fa fa-eye"></i>{{article.view}}</span>
+            <span class="comment"><i class="fa fa-comments"></i>{{article.comment}}</span>
+            <span class="like"><i class="fa fa-star"></i>{{article.like}}</span>
+            <span class="time"><i class="fa fa-calendar"></i>{{article.date}}</span>
           </div>
           <div class="btn-wrapper">
             <span class="back" @click="back"><i class="fa fa-chevron-left"></i></span>
@@ -19,11 +19,11 @@
           <comment></comment>
         </div>
         <div class="commentitem-wrapper">
-          <commentitem></commentitem>
+          <commentitem v-for="comment in article.commentList" :comment="comment"></commentitem>
         </div>
       </div>
-      <div class="sidebar-wrapper" :class="{'fixed': fixed}">
-        <sidebar v-for="title in sidebars" :title="title"></sidebar>
+      <div class="sidebar-wrapper" :class="{'fixed': fixed}" v-if="tagList">
+        <sidebar v-for="(title, index) in sidebars" :title="title" :tags="tagList[index]"></sidebar>
       </div>
     </div>
     <div class="backtotop-wrapper">
@@ -32,11 +32,16 @@
   </div>
 </template>
 <script>
-  import comment from 'components/comments/comments'
+  import comment from 'components/comment/comment'
   import commentitem from 'components/commentitem/commentitem'
   import sidebar from 'components/sidebar/sidebar'
   import backtotop from 'components/backtotop/backtotop'
   import markdown from 'components/markdown/markdown'
+
+  import {urlParse} from '../../assets/js/urlParse'
+  import {bus} from '../../assets/js/bus'
+
+  const OK = 1
 
   export default {
     props: {
@@ -49,7 +54,9 @@
       return {
         sidebars: ['TOPIC', 'TAG'],
         fixed: false,
-        text: '- sdfsfdd\n- sdfsdf\n'
+        text: '',
+        article: null,
+        tagList: null
       }
     },
     methods: {
@@ -65,7 +72,36 @@
       }
     },
     created () {
+      let Vue = this
+      let param = urlParse()
+      if (param.id !== undefined) {
+        this.$http.post('/api/getArticleById', {id: param.id})
+          .then(function (response) {
+            let res = response.data
+            if (res.code === OK) {
+              Vue.article = res.data.article
+              Vue.text = res.data.article.content
+            }
+          })
+          .catch(function (error) {
+            console.log(error.toString())
+          })
+      }
+      this.$http.post('/api/getTagList', null)
+        .then(function (response) {
+          let res = response.data
+          if (res.code === OK) {
+            Vue.tagList = res.data
+          }
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
       window.addEventListener('scroll', this.articleScroll)
+      bus.$on('addComment', function (comment) {
+        console.log(comment)
+        Vue.article.commentList.push(comment)
+      })
     },
     components: {
       comment: comment,

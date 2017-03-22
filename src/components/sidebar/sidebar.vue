@@ -2,7 +2,7 @@
   <div class="sidebar">
     <h1 class="title">{{title}}</h1>
     <div class="tags">
-      <tag></tag>
+      <tag v-for="tag in tags" :tag="tag"></tag>
     </div>
   </div>
 </template>
@@ -37,4 +37,8 @@
       font-weight 600
       text-align center
       color #4285f4
+    .tag
+      margin-right 10px
+      &:last-child
+        margin 0
 </style>
