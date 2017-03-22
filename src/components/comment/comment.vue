@@ -1,7 +1,7 @@
 <template>
   <div class="comments">
     <div class="avatar-wrapper">
-      <img id="avatar" src="../../assets/imgs/deep_space.png" alt="">
+      <img id="avatar" src="http://www.jiangfeather.com/images/imgAvatar.jpg" alt="">
       <input id="avatar-btn" type="file">
       <span class="hint">modify</span>
     </div>

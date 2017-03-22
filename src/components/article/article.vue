@@ -12,7 +12,7 @@
           </div>
           <div class="btn-wrapper">
             <span class="back" @click="back"><i class="fa fa-chevron-left"></i></span>
-            <span class="star"><i class="fa" :class="{'fa-star': isStar, 'fa-star-o': !isStar}"></i></span>
+            <span :class="{'star':isStar, 'unstar':!isStar}" @click="star"><i class="fa" :class="{'fa-star': isStar, 'fa-star-o': !isStar}"></i></span>
           </div>
         </div>
         <div class="comment-wrapper">
@@ -56,7 +56,8 @@
         fixed: false,
         text: '',
         article: null,
-        tagList: null
+        tagList: null,
+        isStar: false
       }
     },
     methods: {
@@ -69,24 +70,26 @@
       },
       back () {
         window.history.back()
+      },
+      star () {
+        let Vue = this
+        let param = urlParse()
+        if (param.id !== undefined) {
+          this.$http.post('/api/addLike', {id: param.id})
+            .then(function (response) {
+              let res = response.data
+              if (res.code === OK) {
+                Vue.isStar = true
+              }
+            })
+            .catch(function (error) {
+              console.log(error.toString())
+            })
+        }
       }
     },
     created () {
       let Vue = this
-      let param = urlParse()
-      if (param.id !== undefined) {
-        this.$http.post('/api/getArticleById', {id: param.id})
-          .then(function (response) {
-            let res = response.data
-            if (res.code === OK) {
-              Vue.article = res.data.article
-              Vue.text = res.data.article.content
-            }
-          })
-          .catch(function (error) {
-            console.log(error.toString())
-          })
-      }
       this.$http.post('/api/getTagList', null)
         .then(function (response) {
           let res = response.data
@@ -102,6 +105,24 @@
         console.log(comment)
         Vue.article.commentList.push(comment)
       })
+    },
+    activated () {
+      let Vue = this
+      let param = urlParse()
+      if (param.id !== undefined) {
+        this.$http.post('/api/getArticleById', {id: param.id})
+          .then(function (response) {
+            let res = response.data
+            if (res.code === OK) {
+              Vue.article = res.data.article
+              Vue.text = res.data.article.content
+              Vue.isStar = false
+            }
+          })
+          .catch(function (error) {
+            console.log(error.toString())
+          })
+      }
     },
     components: {
       comment: comment,
@@ -173,7 +194,7 @@
             margin-left -4px
             line-height 32px
             font-size 20px
-        .star
+        .unstar
           display inline-block
           width 50px
           height 30px
@@ -188,6 +209,21 @@
           &:hover
             color #fff
             background #4285f4
+          i
+            line-height 30px
+            font-size 20px
+        .star
+          display inline-block
+          width 50px
+          height 30px
+          vertical-align top
+          text-align center
+          color #fff
+          background #4285f4
+          border-radius 2px
+          box-shadow 0 2px 5px 0 rgba(0,0,0,0.26)
+          cursor pointer
+          transition all 0.5s ease
           i
             line-height 30px
             font-size 20px
