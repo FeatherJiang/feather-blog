@@ -16,7 +16,7 @@
           </div>
         </div>
         <div class="comment-wrapper">
-          <comment></comment>
+          <comment @addComment="addComment"></comment>
         </div>
         <div class="commentitem-wrapper">
           <commentitem v-for="comment in article.commentList" :comment="comment"></commentitem>
@@ -39,7 +39,6 @@
   import markdown from 'components/markdown/markdown'
 
   import {urlParse} from '../../assets/js/urlParse'
-  import {bus} from '../../assets/js/bus'
 
   const OK = 1
 
@@ -86,6 +85,9 @@
               console.log(error.toString())
             })
         }
+      },
+      addComment (comment) {
+        this.article.commentList.push(comment)
       }
     },
     created () {
@@ -101,10 +103,6 @@
           console.log(error)
         })
       window.addEventListener('scroll', this.articleScroll)
-      bus.$on('addComment', function (comment) {
-        console.log(comment)
-        Vue.article.commentList.push(comment)
-      })
     },
     activated () {
       let Vue = this

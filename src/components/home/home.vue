@@ -30,7 +30,6 @@
   </div>
 </template>
 <script>
-  import {bus} from '../../assets/js/bus.js'
   import banner from 'components/banner/banner'
   import profile from 'components/profile/profile'
   import sidebar from 'components/sidebar/sidebar'
@@ -54,7 +53,6 @@
     },
     methods: {
       homeScroll () {
-        bus.$emit('homeScroll', window.scrollY)
         if (window.scrollY >= 250) {
           this.fixed = true
         } else {

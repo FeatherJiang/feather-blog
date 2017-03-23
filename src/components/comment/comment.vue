@@ -28,7 +28,6 @@
   </div>
 </template>
 <script>
-  import {bus} from '../../assets/js/bus'
   import {urlParse} from '../../assets/js/urlParse'
 
   const OK = 1
@@ -62,7 +61,7 @@
           .then(function (response) {
             let res = response.data
             if (res.code === OK) {
-              bus.$emit('addComment', Vue.comment)
+              Vue.$emit('addComment', Vue.comment)
               Vue.comment.name = ''
               Vue.comment.email = ''
               Vue.comment.comment = ''
