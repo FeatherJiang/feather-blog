@@ -99,7 +99,7 @@
       this.$http.post('/api/getArticleList', {page: this.page})
         .then(function (response) {
           let res = response.data
-          if (res.code === OK) {
+          if (res.code === OK && res.data.articleList.length !== 0) {
             Vue.articleList = res.data.articleList
             Vue.page += 1
           }

@@ -101,6 +101,7 @@
         }
       },
       getArticle () {
+        this.page = 1
         let Vue = this
         let param = urlParse()
         if (param.tag !== undefined) {
@@ -108,8 +109,12 @@
             .then(function (response) {
               let res = response.data
               if (res.code === OK) {
-                Vue.articleList = res.data.articleList
-                Vue.page += 1
+                if (res.data.articleList.length !== 0) {
+                  Vue.articleList = res.data.articleList
+                  Vue.page += 1
+                } else {
+                  Vue.articleList = []
+                }
               }
             })
             .catch(function (error) {
@@ -119,7 +124,7 @@
           this.$http.post('/api/getArticleListByType', {type: 1, page: this.page})
             .then(function (response) {
               let res = response.data
-              if (res.code === OK) {
+              if (res.code === OK && res.data.articleList.length !== 0) {
                 Vue.articleList = res.data.articleList
                 Vue.page += 1
               }
@@ -143,6 +148,7 @@
         .catch(function (error) {
           console.log(error)
         })
+      this.getArticle()
     },
     watch: {
       '$route': 'getArticle'

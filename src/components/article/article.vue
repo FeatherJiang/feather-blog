@@ -43,12 +43,6 @@
   const OK = 1
 
   export default {
-    props: {
-      isStar: {
-        type: Boolean,
-        default: false
-      }
-    },
     data () {
       return {
         sidebars: ['TOPIC', 'TAG'],
