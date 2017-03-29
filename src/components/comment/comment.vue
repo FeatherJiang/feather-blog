@@ -1,9 +1,9 @@
 <template>
   <div class="comments">
     <div class="avatar-wrapper">
-      <img id="avatar" src="http://www.jiangfeather.com/images/imgAvatar.jpg" alt="">
-      <input id="avatar-btn" type="file">
-      <span class="hint">modify</span>
+      <img id="avatar" src="http://www.jiangfeather.com/images/imgAvatar.jpg" ref="img">
+      <input id="avatar-btn" type="file" ref="fileImg" @change="addImg">
+      <span class="modify">modify</span>
     </div>
     <div class="info-wrapper">
       <div class="name-wrapper">
@@ -17,7 +17,7 @@
     </div>
     <div class="text-wrapper">
       <label for="comment-content" class="text">comment</label>
-      <textarea name="comment" id="comment-content" v-model="comment.comment"></textarea>
+      <textarea name="comment" id="comment-content" v-model="comment.content"></textarea>
     </div>
     <div class="submit-wrapper">
       <span id="comment-btn" @click="addComment">submit</span>
@@ -40,7 +40,7 @@
           img: 'http://www.jiangfeather.com/images/imgAvatar.jpg',
           name: '',
           email: '',
-          comment: '',
+          content: '',
           date: ''
         },
         hintShow: false,
@@ -48,39 +48,74 @@
       }
     },
     methods: {
+      addImg () {
+        let resultFile = this.$refs.fileImg.files[0]
+        let url = null
+        if (window.createObjectURL !== undefined) {
+          url = window.createObjectURL(resultFile)
+        } else if (window.URL !== undefined) {
+          url = window.URL.createObjectURL(resultFile)
+        } else if (window.webkitURL !== undefined) {
+          url = window.webkitURL.createObjectURL(resultFile)
+        }
+        if (url) {
+          this.$refs.img.setAttribute('src', url)
+        }
+      },
       addComment () {
         let Vue = this
-        let date = new Date()
-        let param = urlParse()
-        console.log(param)
-        if (param.id !== undefined) {
-          this.comment.articleId = param.id
+        if (this.comment.name === '' || this.comment.content === '') {
+          Vue.hintShow = true
+          Vue.text = 'fail'
+          setTimeout(function () {
+            Vue.hintShow = false
+          }, 2000)
+        } else {
+          let date = new Date()
+          let param = urlParse()
+          if (param.id !== undefined) {
+            this.comment.articleId = param.id
+          }
+          this.comment.date = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes()
+          let data = new FormData()
+          data.append('articleId', this.comment.articleId)
+          if (this.$refs.fileImg.value === 0) {
+            data.append('img', 'http://www.jiangfeather.com/images/imgAvatar.jpg')
+          } else {
+            data.append('img', this.$refs.fileImg.files[0])
+          }
+          data.append('name', this.comment.name)
+          data.append('email', this.comment.email)
+          data.append('content', this.comment.content)
+          data.append('date', this.comment.date)
+
+          this.$http.post('/api/addComment', data)
+            .then(function (response) {
+              let res = response.data
+              if (res.code === OK) {
+                let comment = JSON.parse(JSON.stringify(Vue.comment))
+                comment.avatar = res.data.avatar
+                Vue.$emit('addComment', comment)
+                Vue.comment.name = ''
+                Vue.comment.email = ''
+                Vue.comment.content = ''
+                Vue.hintShow = true
+                Vue.text = 'success'
+                setTimeout(function () {
+                  Vue.hintShow = false
+                }, 2000)
+              } else {
+                Vue.hintShow = true
+                Vue.text = 'fail'
+                setTimeout(function () {
+                  Vue.hintShow = false
+                }, 2000)
+              }
+            })
+            .catch(function (error) {
+              console.log(error.toString())
+            })
         }
-        this.comment.date = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes()
-        this.$http.post('/api/addComment', this.comment)
-          .then(function (response) {
-            let res = response.data
-            if (res.code === OK) {
-              Vue.$emit('addComment', Vue.comment)
-              Vue.comment.name = ''
-              Vue.comment.email = ''
-              Vue.comment.comment = ''
-              Vue.hintShow = true
-              Vue.text = 'success'
-              setTimeout(function () {
-                Vue.hintShow = false
-              }, 2000)
-            } else {
-              Vue.hintShow = true
-              Vue.text = 'fail'
-              setTimeout(function () {
-                Vue.hintShow = false
-              }, 2000)
-            }
-          })
-          .catch(function (error) {
-            console.log(error.toString())
-          })
       }
     }
   }
@@ -111,7 +146,7 @@
         border-radius 50%
         opacity 0
         cursor pointer
-      .hint
+      .modify
         position absolute
         z-index 2
         left 0

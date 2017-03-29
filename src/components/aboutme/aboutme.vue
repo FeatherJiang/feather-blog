@@ -14,12 +14,13 @@
         text: ''
       }
     },
-    create () {
+    created () {
+      let Vue = this
       this.$http.post('api/getAboutMe', null)
         .then(function (response) {
           let res = response.data
           if (res.code === OK) {
-            this.text = res.data
+            Vue.text = res.data
           }
         })
         .catch(function (error) {

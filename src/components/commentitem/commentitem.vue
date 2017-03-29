@@ -1,12 +1,12 @@
 <template>
   <div class="commentitem">
     <div class="avatar">
-      <img :src="comment.img" alt="">
+      <img :src="comment.avatar" alt="">
     </div>
     <div class="comment-main">
       <div class="comment-content">
         <span class="name">{{comment.name}}: </span>
-        <span class="text">{{comment.comment}}</span>
+        <span class="text">{{comment.content}}</span>
       </div>
       <div class="comment-time">{{comment.date}}</div>
     </div>
