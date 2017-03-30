@@ -50,6 +50,10 @@ export default new Router({
   ],
   transitionOnLoad: false,
   scrollBehavior (to, from, savedPosition) {
-    return savedPosition
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      return { x: 0, y: 0 }
+    }
   }
 })
