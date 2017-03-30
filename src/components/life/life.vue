@@ -206,10 +206,13 @@
             color #4285f4
           .loading
             margin 0 auto
-          .init-enter-active, .init-leave-active
-            transition all 0.5s ease
-          .init-enter, .init-leave-active
-            opacity 0
+        .init-enter-active, .init-leave-active
+          transition all .5s ease
+        .init-enter
+          transform translate(0, 30px)
+          opacity 0
+        .init-leave-active
+          display none
       .sidebar-wrapper
         display inline-block
         vertical-align top
