@@ -7,8 +7,9 @@
             <profile :article="article"></profile>
           </router-link>
         </transition-group>
-        <div class="noarticle" v-if="articleList === null || articleList.length == 0">
-          <span>no article</span>
+        <div class="load-article" v-if="(articleList === null || articleList.length == 0) || loadingShow">
+          <span  v-if="(articleList === null || articleList.length == 0) && !loadingShow">no article</span>
+          <loading v-if="loadingShow"></loading>
         </div>
         <div class="loading-wrapper" @click="getMore" v-if="articleList !== null && articleList.length >= 10">
           <div class="more" v-show="showMore">
@@ -42,6 +43,7 @@
         sidebars: ['TOPIC', 'TAG'],
         fixed: false,
         showMore: true,
+        loadingShow: true,
         text: 'more',
         bannerList: null,
         articleList: null,
@@ -109,6 +111,7 @@
             .then(function (response) {
               let res = response.data
               if (res.code === OK) {
+                Vue.loadingShow = false
                 if (res.data.articleList.length !== 0) {
                   Vue.articleList = res.data.articleList
                   Vue.page += 1
@@ -125,6 +128,7 @@
             .then(function (response) {
               let res = response.data
               if (res.code === OK) {
+                Vue.loadingShow = false
                 if (res.data.articleList.length !== 0) {
                   Vue.articleList = res.data.articleList
                   Vue.page += 1
@@ -179,18 +183,21 @@
         width 800px
         .profile
           margin 10px 0
-        .noarticle
+        .load-article
           width 100%
-          height 30px
-          margin 20px 0
+          height 25px
+          margin 10px 0
+          padding 5px 0
           text-align center
-          line-height 30px
+          line-height 25px
           font-size 20px
           color #4285f4
-
           background #fff
           box-shadow 0 2px 5px 0 rgba(0,0,0,0.26)
           border-radius 2px
+          .loading
+            text-align justify
+            margin 0 auto
         .loading-wrapper
           margin 10px 0
           padding 5px 0
@@ -213,6 +220,9 @@
           opacity 0
         .init-leave-active
           display none
+      @media (max-width 1200px)
+        .main-wrapper
+          width 100%
       .sidebar-wrapper
         display inline-block
         vertical-align top
@@ -223,9 +233,22 @@
           top 56px
         .sidebar
           margin 10px 0
+      @media (max-width 1200px)
+        .sidebar-wrapper
+          display none
+    @media (max-width 1200px)
+      .container
+        width 100%
+        padding 0 10px
+        box-sizing border-box
     .backtotop-wrapper
       position fixed
       left 50%
       bottom 50px
       margin-left 220px
+    @media (max-width 1200px)
+      .backtotop-wrapper
+        right 20px
+        left auto
+        opacity 0.8
 </style>

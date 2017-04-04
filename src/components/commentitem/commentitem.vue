@@ -24,13 +24,13 @@
 <style lang="stylus" rel="stylesheet/stylus">
   .commentitem
     position relative
+    display flex
     padding 20px
     background #fff
     border-radius 2px
     box-shadow 0 2px 5px 0 rgba(0,0,0,0.26)
     .avatar
-      display inline-block
-      width 50px
+      flex 0 0 50px
       height 50px
       margin 0 10px 0 0
       img
@@ -39,8 +39,8 @@
         border-radius 50%
     .comment-main
       vertical-align top
-      display inline-block
-      width 700px
+      flex 1 1 auto
+      line-height 14px
       .comment-content
         .name
           font-size 14px

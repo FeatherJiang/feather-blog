@@ -136,7 +136,6 @@
       .main-wrapper
         display inline-block
         width 800px
-        max-width 800px
         .main
           width 100%
           margin 10px 0
@@ -164,6 +163,9 @@
           margin 10px 0
           .commentitem
             margin 10px 0
+      @media (max-width 1200px)
+        .main-wrapper
+          width 100%
       .btn-wrapper
         padding  10px 20px
         text-align left
@@ -230,9 +232,23 @@
           top 56px
         .sidebar
           margin 10px 0
+      @media (max-width 1200px)
+        .sidebar-wrapper
+          display none
+    @media (max-width 1200px)
+      .container
+        width 100%
+        padding 0 10px
+        box-sizing border-box
     .backtotop-wrapper
       position fixed
+      z-index 10
       left 50%
       bottom 50px
       margin-left 220px
+    @media (max-width 1200px)
+      .backtotop-wrapper
+        right 20px
+        left auto
+        opacity 0.8
 </style>

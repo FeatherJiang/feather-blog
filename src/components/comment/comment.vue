@@ -79,7 +79,7 @@
           this.comment.date = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes()
           let data = new FormData()
           data.append('articleId', this.comment.articleId)
-          if (this.$refs.fileImg.value === 0) {
+          if (this.$refs.fileImg.value === '') {
             data.append('img', 'http://www.jiangfeather.com/images/imgAvatar.jpg')
           } else {
             data.append('img', this.$refs.fileImg.files[0])
@@ -122,16 +122,18 @@
 </script>
 <style lang="stylus" rel="stylesheet/stylus">
   .comments
-    padding 20px
+    display flex
+    flex-wrap wrap
+    padding 10px
     background #fff
     border-radius 2px
     box-shadow 0 2px 5px 0 rgba(0,0,0,0.26)
     .avatar-wrapper
+      flex 0 0 50px
       position relative
       display inline-block
-      width 50px
       height 50px
-      margin-right 10px
+      margin 10px
       border-radius 50%
       overflow hidden
       #avatar
@@ -160,15 +162,16 @@
         color #fff
         background rgba(0,0,0,0.5)
     .info-wrapper
+      flex 1 1 auto
       vertical-align top
-      display inline-block
-      margin 0 10px 0 0
+      margin 10px
       .name-wrapper
+        display flex
         margin-bottom 6px
         border-radius 5px
         box-shadow 0 2px 5px 0 rgba(0,0,0,0.26)
         .text
-          display inline-block
+          flex 0 0 50px
           width 50px
           padding 0 5px
           text-align center
@@ -178,8 +181,8 @@
           background #4285f4
           border-radius 5px 0 0 5px
         #name
+          flex 1 1 auto
           vertical-align top
-          display inline-block
           width 150px
           height 22px
           font-size 14px
@@ -193,10 +196,11 @@
             border-left 0
             outline none
       .email-wrapper
+        display flex
         border-radius 5px
         box-shadow 0 2px 5px 0 rgba(0,0,0,0.26)
         .text
-          display inline-block
+          flex 0 0 50px
           width 50px
           padding 0 5px
           text-align center
@@ -206,8 +210,8 @@
           background #4285f4
           border-radius 5px 0 0 5px
         #email
+          flex 1 1 auto
           vertical-align top
-          display inline-block
           width 150px
           height 22px
           font-size 14px
@@ -221,12 +225,14 @@
             border-left 0
             outline none
     .text-wrapper
+      display flex
+      flex 1 1 auto
       vertical-align top
-      display inline-block
-      margin-right 10px
+      margin 10px
       border-radius 5px
       box-shadow 0 2px 5px 0 rgba(0,0,0,0.26)
       .text
+        flex 0 0 50px
         vertical-align top
         display inline-block
         padding 0 5px
@@ -236,7 +242,7 @@
         background #4285f4
         border-radius 5px 0 0 5px
       #comment-content
-        width 300px
+        flex 1 1 auto
         height 50px
         padding 5px
         line-height 18px
@@ -250,17 +256,19 @@
           border-left 0
           outline none
     .submit-wrapper
+      flex 0 1 80px
       position relative
       vertical-align top
       display inline-block
+      width 80px
       height 30px
-      margin 10px 0
+      margin 20px 10px
       text-align center
       #comment-btn
         position: absolute;
         z-index 2
         top 0
-        left 50%
+        left 0
         width 80px
         height 30px
         text-align center
@@ -280,7 +288,7 @@
         position absolute
         z-index 1
         top 30px
-        left 50%
+        left 0
         width 60px
         height 20px
         margin 0 0 0 10px

@@ -8,7 +8,10 @@
       <div class="tag-wrapper">
         <tag v-for="tag in article.tags" :tag="tag"></tag>
       </div>
-      <div class="text">{{article.overview}}</div>
+      <div class="text">
+        <img :src="article.img">
+        <span>{{article.overview}}</span>
+      </div>
       <div class="meta">
         <span class="browse"><i class="fa fa-eye"></i>{{article.view}}</span>
         <span class="comment"><i class="fa fa-comments"></i>{{article.comment}}</span>
@@ -37,8 +40,7 @@
 
   .profile
     width 800px
-    max-width 800px
-    height 150px
+    min-height 150px
     font-size 0
     background #fff
     border-radius 2px
@@ -51,7 +53,7 @@
       display inline-block
       width 230px
       height 130px
-      margin 10px
+      margin 10px 0 10px 10px
       border-radius 2px
       overflow hidden
       img
@@ -59,27 +61,53 @@
         transition all 0.3s linear
         &:hover
           transform scale(1.1)
+    @media (max-width 1200px)
+      .img-wrapper
+        flex 0 0 230px
+    @media (max-width 667px)
+      .img-wrapper
+        display none
     .overview
       display inline-block
       width 540px
-      height 130px
-      margin 10px 10px 10px 0
+      min-height 130px
+      margin 10px
       vertical-align top
       .title
         font-size 20px
         color #4285f4
       .tag-wrapper
         width 100%
-        height 20px
+        min-height 20px
         padding 5px 0
         .tag
           margin-right 10px
       .text
         height 65px
-        line-height 18px
-        font-size 14px
         overflow hidden
+        span
+          line-height 17px
+          font-size 14px
+      @media (min-width 1200px)
+        .text
+          img
+            display none
+      @media (max-width 1200px)
+        .text
+          img
+            display none
+      @media (max-width 667px)
+        .text
+          img
+            display inline-block
+            float left
+            vertical-align top
+            width 100px
+            height 65px
+            margin 0 10px 0 0
+            border-radius 2px
       .meta
+        padding 5px 0
         font-size 0
         text-align right
         span
@@ -94,5 +122,11 @@
             margin-right 4px
         span:last-child
           margin 0
-
+    @media (max-width 1200px)
+      .overview
+        flex 1 1
+  @media (max-width 1200px)
+    .profile
+      display flex
+      width 100%
 </style>
