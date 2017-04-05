@@ -35,7 +35,6 @@
       var mc = new Hammer(this.$refs.bannerList)
 
       let Vue = this
-
       mc.on('swipeleft', function (ev) {
         if (Vue.num !== 4) {
           Vue.num++
@@ -64,6 +63,7 @@
     overflow hidden
     .media-banner-list
       position absolute
+      left 0
       width 500%
       height 380px
       font-size 0
