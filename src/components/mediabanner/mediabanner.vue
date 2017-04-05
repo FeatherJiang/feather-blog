@@ -18,7 +18,6 @@
 </template>
 <script>
   import Hammer from 'hammerjs'
-  import {move} from '../../assets/js/move'
 
   export default {
     props: {
@@ -39,7 +38,7 @@
         if (Vue.num !== 4) {
           Vue.num++
           let width = Vue.$refs.mediabanner.offsetWidth
-          move(Vue.$refs.bannerList, {left: -(Vue.num * width)})
+          Vue.$refs.bannerList.style.left = -(Vue.num * width) + 'px'
         }
       })
 
@@ -47,7 +46,7 @@
         if (Vue.num !== 0) {
           Vue.num--
           let width = Vue.$refs.mediabanner.offsetWidth
-          move(Vue.$refs.bannerList, {left: -Vue.num * width})
+          Vue.$refs.bannerList.style.left = -(Vue.num * width) + 'px'
         }
       })
     }
@@ -67,6 +66,7 @@
       width 500%
       height 380px
       font-size 0
+      transition all 1s ease
       .media-banner-item
         display inline-block
         width 20%

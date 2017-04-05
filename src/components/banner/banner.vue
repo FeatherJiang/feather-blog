@@ -21,8 +21,6 @@
   </div>
 </template>
 <script>
-  import {move} from '../../assets/js/move.js'
-
   export default {
     props: {
       banner: {
@@ -54,7 +52,11 @@
           this.num = 4
         }
         for (let i = 1; i <= this.bannerList.length; i++) {
-          move(this.$refs['box' + i], this.bannerList[i - 1])
+          this.$refs['box' + i].style.zIndex = this.bannerList[i - 1].zIndex
+          this.$refs['box' + i].style.top = this.bannerList[i - 1].top + 'px'
+          this.$refs['box' + i].style.left = this.bannerList[i - 1].left + 'px'
+          this.$refs['box' + i].style.width = this.bannerList[i - 1].width + 'px'
+          this.$refs['box' + i].style.height = this.bannerList[i - 1].height + 'px'
         }
       }, 5000)
     },
@@ -74,7 +76,11 @@
             this.num = 4
           }
           for (let i = 1; i <= this.bannerList.length; i++) {
-            move(this.$refs['box' + i], this.bannerList[i - 1])
+            this.$refs['box' + i].style.zIndex = this.bannerList[i - 1].zIndex
+            this.$refs['box' + i].style.top = this.bannerList[i - 1].top + 'px'
+            this.$refs['box' + i].style.left = this.bannerList[i - 1].left + 'px'
+            this.$refs['box' + i].style.width = this.bannerList[i - 1].width + 'px'
+            this.$refs['box' + i].style.height = this.bannerList[i - 1].height + 'px'
           }
         }, 5000)
       },
@@ -89,7 +95,11 @@
           this.num = 4
         }
         for (let i = 1; i <= this.bannerList.length; i++) {
-          move(this.$refs['box' + i], this.bannerList[i - 1])
+          this.$refs['box' + i].style.zIndex = this.bannerList[i - 1].zIndex
+          this.$refs['box' + i].style.top = this.bannerList[i - 1].top + 'px'
+          this.$refs['box' + i].style.left = this.bannerList[i - 1].left + 'px'
+          this.$refs['box' + i].style.width = this.bannerList[i - 1].width + 'px'
+          this.$refs['box' + i].style.height = this.bannerList[i - 1].height + 'px'
         }
       },
       nextBanner2: function () {
@@ -104,7 +114,11 @@
             this.num = 4
           }
           for (let i = 1; i <= this.bannerList.length; i++) {
-            move(this.$refs['box' + i], this.bannerList[i - 1])
+            this.$refs['box' + i].style.zIndex = this.bannerList[i - 1].zIndex
+            this.$refs['box' + i].style.top = this.bannerList[i - 1].top + 'px'
+            this.$refs['box' + i].style.left = this.bannerList[i - 1].left + 'px'
+            this.$refs['box' + i].style.width = this.bannerList[i - 1].width + 'px'
+            this.$refs['box' + i].style.height = this.bannerList[i - 1].height + 'px'
           }
         }
       },
@@ -119,7 +133,11 @@
           this.num = 4
         }
         for (let i = 1; i <= this.bannerList.length; i++) {
-          move(this.$refs['box' + i], this.bannerList[i - 1])
+          this.$refs['box' + i].style.zIndex = this.bannerList[i - 1].zIndex
+          this.$refs['box' + i].style.top = this.bannerList[i - 1].top + 'px'
+          this.$refs['box' + i].style.left = this.bannerList[i - 1].left + 'px'
+          this.$refs['box' + i].style.width = this.bannerList[i - 1].width + 'px'
+          this.$refs['box' + i].style.height = this.bannerList[i - 1].height + 'px'
         }
       },
       preBanner2: function () {
@@ -134,7 +152,11 @@
             this.num = 4
           }
           for (let i = 1; i <= this.bannerList.length; i++) {
-            move(this.$refs['box' + i], this.bannerList[i - 1])
+            this.$refs['box' + i].style.zIndex = this.bannerList[i - 1].zIndex
+            this.$refs['box' + i].style.top = this.bannerList[i - 1].top + 'px'
+            this.$refs['box' + i].style.left = this.bannerList[i - 1].left + 'px'
+            this.$refs['box' + i].style.width = this.bannerList[i - 1].width + 'px'
+            this.$refs['box' + i].style.height = this.bannerList[i - 1].height + 'px'
           }
         }
       }
@@ -157,6 +179,7 @@
         border-radius 2px
         box-shadow 0 2px 5px 0 rgba(0,0,0,0.26)
         overflow hidden
+        transition all 1s ease
         img
           width 100%
           height 100%
