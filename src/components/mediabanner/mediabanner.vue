@@ -36,11 +36,6 @@
 
       let Vue = this
 
-      window.onresize = function () {
-        Vue.$refs.bannerList.style.left = 0
-        Vue.num = 0
-      }
-
       mc.on('swipeleft', function (ev) {
         if (Vue.num !== 4) {
           Vue.num++
