@@ -1,7 +1,7 @@
 <template>
   <div class="profile">
     <div class="img-wrapper">
-      <img :src="article.img" width="230" height="130">
+      <img :src="article.img" width="230" height="134">
     </div>
     <div class="overview">
       <h1 class="title">{{article.title}}</h1>
@@ -52,7 +52,7 @@
     .img-wrapper
       display inline-block
       width 230px
-      height 130px
+      height 134px
       margin 10px 0 10px 10px
       border-radius 2px
       overflow hidden
@@ -107,7 +107,7 @@
             margin 0 10px 0 0
             border-radius 2px
       .meta
-        padding 5px 0
+        padding 5px 0 0 0
         font-size 0
         text-align right
         span
@@ -124,7 +124,7 @@
           margin 0
     @media (max-width 1200px)
       .overview
-        flex 1 1
+        flex 1 1 auto
   @media (max-width 1200px)
     .profile
       display flex

@@ -3,6 +3,9 @@
     <div class="banner-wrapper">
       <banner :banner="bannerList" v-if="bannerList"></banner>
     </div>
+    <div class="media-banner-wrapper">
+      <mediabanner :banner="bannerList" v-if="bannerList"></mediabanner>
+    </div>
     <div class="container">
       <div class="main-wrapper">
         <transition-group name="init">
@@ -32,6 +35,7 @@
 </template>
 <script>
   import banner from 'components/banner/banner'
+  import mediabanner from 'components/mediabanner/mediabanner'
   import profile from 'components/profile/profile'
   import sidebar from 'components/sidebar/sidebar'
   import loading from 'components/loading/loading'
@@ -123,6 +127,7 @@
     },
     components: {
       banner: banner,
+      mediabanner: mediabanner,
       profile: profile,
       sidebar: sidebar,
       loading: loading,
@@ -135,6 +140,13 @@
     width 100%
     @media (max-width 1200px)
       .banner-wrapper
+        display none
+    .media-banner-wrapper
+      width 100%
+      padding 10px
+      box-sizing border-box
+    @media (min-width 1200px)
+      .media-banner-wrapper
         display none
     .container
       width 1200px
