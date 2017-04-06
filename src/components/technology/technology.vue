@@ -129,10 +129,12 @@
           this.$http.post('/api/getArticleListByType', {type: 1, page: this.page})
             .then(function (response) {
               let res = response.data
-              if (res.code === OK && res.data.articleList.length !== 0) {
+              if (res.code === OK) {
                 Vue.loadingShow = false
                 Vue.articleList = res.data.articleList
-                Vue.page += 1
+                if (res.data.articleList.length !== 0) {
+                  Vue.page += 1
+                }
               }
             })
             .catch(function (error) {
