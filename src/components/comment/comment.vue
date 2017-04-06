@@ -29,6 +29,7 @@
 </template>
 <script>
   import {urlParse} from '../../assets/js/urlParse'
+  import axios from 'axios'
 
   const OK = 1
 
@@ -44,7 +45,8 @@
           date: ''
         },
         hintShow: false,
-        text: 'error'
+        text: 'error',
+        cancel: null
       }
     },
     methods: {
@@ -89,7 +91,18 @@
           data.append('content', this.comment.content)
           data.append('date', this.comment.date)
 
-          this.$http.post('/api/addComment', data)
+          if (Vue.cancel !== null) {
+            Vue.cancel()
+          }
+
+          var CancelToken = axios.CancelToken
+
+          this.$http.post('/api/addComment', data, {
+            cancelToken: new CancelToken(function executor (c) {
+              // An executor function receives a cancel function as a parameter
+              Vue.cancel = c
+            })
+          })
             .then(function (response) {
               let res = response.data
               if (res.code === OK) {
