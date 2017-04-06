@@ -47,6 +47,7 @@
           color #4285f4
         .text
           font-size 14px
+          word-break break-all
       .comment-time
         position absolute
         right 20px
