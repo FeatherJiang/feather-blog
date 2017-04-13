@@ -1,8 +1,12 @@
 <template>
   <div class="article">
     <div class="container">
-      <div class="main-wrapper" v-if="article">
-        <div class="main">
+      <div class="main-wrapper">
+        <div class="load-article" v-if="article === null || loadingShow">
+          <span  v-if="article === null && !loadingShow">no article</span>
+          <loading v-if="loadingShow"></loading>
+        </div>
+        <div class="main" v-if="article">
           <markdown :text="text"></markdown>
           <div class="footer">
             <span class="browse"><i class="fa fa-eye"></i>{{article.view}}</span>
@@ -15,10 +19,10 @@
             <span :class="{'star':isStar, 'unstar':!isStar}" @click="star"><i class="fa" :class="{'fa-star': isStar, 'fa-star-o': !isStar}"></i></span>
           </div>
         </div>
-        <div class="comment-wrapper">
+        <div class="comment-wrapper" v-if="article">
           <comment @addComment="addComment"></comment>
         </div>
-        <div class="commentitem-wrapper">
+        <div class="commentitem-wrapper" v-if="article && article.commentList">
           <commentitem v-for="comment in article.commentList" :comment="comment"></commentitem>
         </div>
       </div>
@@ -37,6 +41,7 @@
   import sidebar from 'components/sidebar/sidebar'
   import backtotop from 'components/backtotop/backtotop'
   import markdown from 'components/markdown/markdown'
+  import loading from 'components/loading/loading'
 
   import {urlParse} from '../../assets/js/urlParse'
 
@@ -48,6 +53,7 @@
         sidebars: ['TOPIC', 'TAG'],
         fixed: false,
         text: '',
+        loadingShow: true,
         article: null,
         tagList: null,
         isStar: false
@@ -105,6 +111,7 @@
         this.$http.post('/api/getArticleById', {id: param.id})
           .then(function (response) {
             let res = response.data
+            Vue.loadingShow = false
             if (res.code === OK) {
               Vue.article = res.data.article
               Vue.text = res.data.article.content
@@ -121,7 +128,8 @@
       commentitem: commentitem,
       sidebar: sidebar,
       backtotop: backtotop,
-      markdown: markdown
+      markdown: markdown,
+      loading: loading
     }
   }
 </script>
@@ -136,6 +144,21 @@
       .main-wrapper
         display inline-block
         width 800px
+        .load-article
+          width 100%
+          height 25px
+          margin 10px 0
+          padding 5px 0
+          text-align center
+          line-height 25px
+          font-size 20px
+          color #4285f4
+          background #fff
+          box-shadow 0 2px 5px 0 rgba(0,0,0,0.26)
+          border-radius 2px
+          .loading
+            text-align justify
+            margin 0 auto
         .main
           width 100%
           margin 10px 0

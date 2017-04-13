@@ -218,6 +218,8 @@
         position absolute
         border-radius 2px
         cursor pointer
+        background #000
+        opacity 0
       .pre1
         z-index 2
         top 45px

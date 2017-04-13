@@ -17,15 +17,16 @@
     methods: {
       backToTop () {
         this.toTop = setInterval(() => {
-          let speed = Math.ceil(window.scrollY / 5)
+          let scrollY = window.scrollY ? window.scrollY : document.documentElement.scrollTop
+          let speed = Math.ceil(scrollY / 5)
           if ((this.speed === 0 ? speed : this.speed) < speed) {
             this.speed = 0
             clearInterval(this.toTop)
           } else {
             this.speed = speed
           }
-          window.scrollTo(0, (window.scrollY - speed))
-          if (window.scrollY <= 2) {
+          window.scrollTo(0, (scrollY - speed))
+          if (scrollY <= 2) {
             this.speed = 0
             clearInterval(this.toTop)
           }
@@ -34,7 +35,8 @@
     },
     created () {
       window.addEventListener('scroll', () => {
-        if (window.scrollY <= 300) {
+        let scrollY = window.scrollY ? window.scrollY : document.documentElement.scrollTop
+        if (scrollY <= 300) {
           this.showToTop = false
         } else {
           this.showToTop = true
