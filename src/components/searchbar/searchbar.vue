@@ -38,6 +38,7 @@
         outline none
     .search-btn
       flex 0 0 50px
+      padding 0
       color #fff
       background rgba(66,133,244,0.8)
       border none

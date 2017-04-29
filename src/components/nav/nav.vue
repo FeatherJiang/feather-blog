@@ -113,7 +113,7 @@
       position absolute
       z-index -1
       left 0
-      bottom -165px
+      bottom -175px
       width 100%
       padding 0 10px
       box-sizing border-box
@@ -136,7 +136,7 @@
     .pull-enter-active, .pull-leave-active
       transition all .5s ease
     .pull-enter, .pull-leave-active
-      transform translate(0, -165px)
+      transform translate(0, -175px)
   @media (max-width: 677px)
     .nav
       padding 0 10px
