@@ -39,11 +39,13 @@
     .search-btn
       flex 0 0 50px
       padding 0
+      margin 0
       color #fff
       background rgba(66,133,244,0.8)
       border none
       cursor pointer
       transition all .2s
+      -webkit-appearance none
       &:hover
         background #4285f4
 </style>

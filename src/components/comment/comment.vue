@@ -257,6 +257,7 @@
       #comment-content
         flex 1 1 auto
         height 50px
+        margin 0
         padding 5px
         line-height 18px
         background #f7f7f7
