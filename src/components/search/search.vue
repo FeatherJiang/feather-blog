@@ -1,11 +1,5 @@
 <template>
-  <div class="home">
-    <div class="banner-wrapper">
-      <banner :banner="bannerList" v-if="bannerList"></banner>
-    </div>
-    <div class="media-banner-wrapper">
-      <mediabanner :banner="bannerList" v-if="bannerList"></mediabanner>
-    </div>
+  <div class="search">
     <div class="container">
       <div class="main-wrapper">
         <transition-group tag="div" name="init">
@@ -35,6 +29,7 @@
   </div>
 </template>
 <script>
+  import {urlParse} from '../../assets/js/urlParse'
   import banner from 'components/banner/banner'
   import mediabanner from 'components/mediabanner/mediabanner'
   import profile from 'components/profile/profile'
@@ -60,8 +55,8 @@
       }
     },
     methods: {
-      homeScroll () {
-        if (window.scrollY >= 250) {
+      searchScroll () {
+        if (window.scrollY > 0) {
           this.fixed = true
         } else {
           this.fixed = false
@@ -73,51 +68,57 @@
       getMore () {
         let Vue = this
         this.showMore = false
-        this.$http.post('/api/getArticleList', {page: this.page})
-          .then(function (response) {
-            let res = response.data
-            if (res.code === OK) {
-              if (res.data.articleList.length !== 0) {
-                Vue.articleList = Vue.articleList.concat(res.data.articleList)
-                Vue.page += 1
-              } else {
-                Vue.text = 'no more'
-              }
+        let param = urlParse()
+        if (param.text !== undefined) {
+          this.$http.post('/api/getSearchList', {text: param.text, page: this.page})
+            .then(function (response) {
+              let res = response.data
               Vue.showMore = true
-            }
-          })
-          .catch(function (error) {
-            console.log(error.toString())
-          })
+              if (res.code === OK) {
+                if (res.data.articleList.length !== 0) {
+                  Vue.articleList = Vue.articleList.concat(res.data.articleList)
+                  Vue.page += 1
+                } else {
+                  Vue.text = 'no more'
+                }
+              }
+            })
+            .catch(function (error) {
+              console.log(error.toString())
+            })
+        } else {
+          Vue.loadingShow = false
+        }
+      },
+      getSearch () {
+        this.page = 1
+        this.articleList = null
+        this.loadingShow = true
+        let Vue = this
+        let param = urlParse()
+        if (param.text !== undefined) {
+          this.$http.post('/api/getSearchList', {text: param.text, page: this.page})
+            .then(function (response) {
+              let res = response.data
+              Vue.loadingShow = false
+              if (res.code === OK) {
+                if (res.data.articleList.length !== 0) {
+                  Vue.articleList = res.data.articleList
+                  Vue.page += 1
+                }
+              }
+            })
+            .catch(function (error) {
+              console.log(error.toString())
+            })
+        } else {
+          Vue.loadingShow = false
+        }
       }
     },
     created () {
       let Vue = this
-      window.addEventListener('scroll', this.homeScroll)
-      this.$http.post('/api/getBannerList', null)
-        .then(function (response) {
-          let res = response.data
-          if (res.code === OK) {
-            Vue.bannerList = res.data
-          }
-        })
-        .catch(function (error) {
-          console.log(error.toString())
-        })
-      this.$http.post('/api/getArticleList', {page: this.page})
-        .then(function (response) {
-          let res = response.data
-          if (res.code === OK) {
-            Vue.articleList = res.data.articleList
-            Vue.loadingShow = false
-            if (res.data.articleList.length !== 0) {
-              Vue.page += 1
-            }
-          }
-        })
-        .catch(function (error) {
-          console.log(error)
-        })
+      window.addEventListener('scroll', this.searchScroll)
       this.$http.post('/api/getTagList', null)
         .then(function (response) {
           let res = response.data
@@ -128,6 +129,10 @@
         .catch(function (error) {
           console.log(error)
         })
+      this.getSearch()
+    },
+    watch: {
+      '$route': 'getSearch'
     },
     components: {
       banner: banner,
@@ -141,18 +146,8 @@
   }
 </script>
 <style lang="stylus" rel="stylesheet/stylus">
-  .home
+  .search
     width 100%
-    @media (max-width 1200px)
-      .banner-wrapper
-        display none
-    .media-banner-wrapper
-      width 100%
-      padding 10px
-      box-sizing border-box
-    @media (min-width 1200px)
-      .media-banner-wrapper
-        display none
     .container
       width 1200px
       max-width 1200px

@@ -86,6 +86,7 @@
         height 65px
         overflow hidden
         span
+          color #000000
           line-height 17px
           font-size 14px
       @media (min-width 1200px)

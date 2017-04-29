@@ -7,6 +7,7 @@ import life from 'components/life/life'
 import aboutme from 'components/aboutme/aboutme'
 import contact from 'components/contact/contact'
 import article from 'components/article/article'
+import search from 'components/search/search'
 import notfound from 'components/notfound/notfound'
 
 Vue.use(Router)
@@ -47,6 +48,11 @@ export default new Router({
       path: '/article',
       name: 'article',
       component: article
+    },
+    {
+      path: '/search',
+      name: 'search',
+      component: search
     },
     {
       path: '*',

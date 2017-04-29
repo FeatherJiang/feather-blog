@@ -2,8 +2,8 @@
   <div class="technology">
     <div class="container">
       <div class="main-wrapper">
-        <transition-group name="init">
-          <router-link tag="div" :to="articleLink(article.id)" v-for="article in articleList" :key="article.id">
+        <transition-group tag="div" name="init">
+          <router-link tag="a" class="profile-wrapper" :to="articleLink(article.id)" v-for="article in articleList" :key="article.id">
             <profile :article="article"></profile>
           </router-link>
         </transition-group>
@@ -19,6 +19,7 @@
         </div>
       </div>
       <div class="sidebar-wrapper" :class="{'fixed': fixed}" v-if="tagList">
+        <searchbar></searchbar>
         <sidebar v-for="(title, index) in sidebars" :title="title" :tags="tagList[index]"></sidebar>
       </div>
     </div>
@@ -34,6 +35,7 @@
   import sidebar from 'components/sidebar/sidebar'
   import loading from 'components/loading/loading'
   import backtotop from 'components/backtotop/backtotop'
+  import searchbar from 'components/searchbar/searchbar'
 
   const OK = 1
 
@@ -52,8 +54,8 @@
       }
     },
     methods: {
-      homeScroll () {
-        if (window.scrollY >= 250) {
+      technologyScroll () {
+        if (window.scrollY > 0) {
           this.fixed = true
         } else {
           this.fixed = false
@@ -112,8 +114,8 @@
           this.$http.post('/api/getArticleListByTag', {tag: param.tag, page: this.page})
             .then(function (response) {
               let res = response.data
+              Vue.loadingShow = false
               if (res.code === OK) {
-                Vue.loadingShow = false
                 if (res.data.articleList.length !== 0) {
                   Vue.articleList = res.data.articleList
                   Vue.page += 1
@@ -145,7 +147,7 @@
     },
     created () {
       let Vue = this
-      window.addEventListener('scroll', this.homeScroll)
+      window.addEventListener('scroll', this.technologyScroll)
       this.$http.post('/api/getTagList', null)
         .then(function (response) {
           let res = response.data
@@ -166,7 +168,8 @@
       profile: profile,
       sidebar: sidebar,
       loading: loading,
-      backtotop: backtotop
+      backtotop: backtotop,
+      searchbar: searchbar
     }
   }
 </script>
@@ -181,7 +184,8 @@
       .main-wrapper
         display inline-block
         width 800px
-        .profile
+        .profile-wrapper
+          display block
           margin 10px 0
         .load-article
           width 100%

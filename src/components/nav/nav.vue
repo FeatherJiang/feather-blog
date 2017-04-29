@@ -13,12 +13,14 @@
         <router-link class="media-nav-item" tag="li" :to="navItem.routerLink" v-for="navItem in navList">
           {{navItem.text}}
         </router-link>
+        <searchbar></searchbar>
       </ul>
     </transition>
   </div>
 </template>
 <script>
   import navitem from 'components/navitem/navitem'
+  import searchbar from 'components/searchbar/searchbar'
 
   export default {
     props: {
@@ -61,7 +63,8 @@
       }
     },
     components: {
-      navitem: navitem
+      navitem: navitem,
+      searchbar: searchbar
     }
   }
 </script>
@@ -106,10 +109,11 @@
       .nav-list
         display none
     .media-nav-list
+      display none
       position absolute
       z-index -1
       left 0
-      bottom -145px
+      bottom -165px
       width 100%
       padding 0 10px
       box-sizing border-box
@@ -123,10 +127,16 @@
         background #4285f4
         border-radius 2px
         box-shadow 0 2px 5px 0 rgba(0,0,0,0.26)
+      .searchbar
+        margin 0
+        height 30px
+    @media (max-width 1200px)
+      .media-nav-list
+        display block
     .pull-enter-active, .pull-leave-active
       transition all .5s ease
     .pull-enter, .pull-leave-active
-      transform translate(0, -145px)
+      transform translate(0, -165px)
   @media (max-width: 677px)
     .nav
       padding 0 10px
