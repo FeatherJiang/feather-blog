@@ -15,6 +15,7 @@
       }
     },
     methods: {
+      // 回到顶部
       backToTop () {
         this.toTop = setInterval(() => {
           let scrollY = window.scrollY ? window.scrollY : document.documentElement.scrollTop

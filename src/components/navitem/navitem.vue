@@ -31,6 +31,7 @@
       hideSubList: function () {
         this.subListShow = false
       },
+      // 路由跳转
       queryTag (tag) {
         let Vue = this
         this.$http.post('/api/getTagType', {tag: tag})

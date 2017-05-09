@@ -10,6 +10,7 @@ import home from 'components/home/home'
 // import search from 'components/search/search'
 // import notfound from 'components/notfound/notfound'
 
+// 异步组件获取
 const technology = () => System.import('components/technology/technology.vue')
 const life = () => System.import('components/life/life.vue')
 const aboutme = () => System.import('components/aboutme/aboutme.vue')

@@ -12,6 +12,7 @@
       }
     },
     methods: {
+      // 跳转到搜索路由
       search () {
         let text = this.text
         this.text = ''

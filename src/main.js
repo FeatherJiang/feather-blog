@@ -8,8 +8,10 @@ import es6 from 'es6-promise'
 
 import 'assets/stylus/index.styl'
 
+// es6转换为es5
 es6.polyfill()
 
+// 使用axios
 Vue.prototype.$http = axios.create({
   baseURL: 'http://www.jiangfeather.com'
 })

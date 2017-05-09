@@ -34,6 +34,7 @@
       var mc = new Hammer(this.$refs.bannerList)
 
       let Vue = this
+      // 左滑动
       mc.on('swipeleft', function (ev) {
         if (Vue.num !== 4) {
           Vue.num++
@@ -42,6 +43,7 @@
         }
       })
 
+      // 右滑动
       mc.on('swiperight', function (ev) {
         if (Vue.num !== 0) {
           Vue.num--

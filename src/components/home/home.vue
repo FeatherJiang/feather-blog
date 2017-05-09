@@ -60,6 +60,7 @@
       }
     },
     methods: {
+      // 侧边栏跟随
       homeScroll () {
         if (window.scrollY >= 250) {
           this.fixed = true
@@ -67,9 +68,11 @@
           this.fixed = false
         }
       },
+      // 文章链接生成
       articleLink (id) {
         return 'article?id=' + id
       },
+      // 抓取更多文章数据
       getMore () {
         let Vue = this
         this.showMore = false

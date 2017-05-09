@@ -41,6 +41,7 @@
       }
     },
     created: function () {
+      // 设置定时器
       this.timer = setInterval(() => {
         this.bannerList.unshift(this.bannerList[this.bannerList.length - 1])
         this.bannerList.pop()
@@ -61,9 +62,11 @@
       }, 5000)
     },
     methods: {
+      // 停止轮播图滚动
       stopBanner: function () {
         clearInterval(this.timer)
       },
+      // 开始轮播图滚动
       startBanner: function () {
         this.timer = setInterval(() => {
           this.bannerList.unshift(this.bannerList[this.bannerList.length - 1])
@@ -84,6 +87,7 @@
           }
         }, 5000)
       },
+      // 点击下一个轮播图滚动
       nextBanner1: function () {
         this.bannerList.unshift(this.bannerList[this.bannerList.length - 1])
         this.bannerList.pop()
@@ -102,6 +106,7 @@
           this.$refs['box' + i].style.height = this.bannerList[i - 1].height + 'px'
         }
       },
+      // 点击下两个轮播图滚动
       nextBanner2: function () {
         for (let i = 0; i < 2; i++) {
           this.bannerList.unshift(this.bannerList[this.bannerList.length - 1])
@@ -122,6 +127,7 @@
           }
         }
       },
+      // 点击上一个轮播图滚动
       preBanner1: function () {
         this.bannerList.push(this.bannerList[0])
         this.bannerList.shift()
@@ -140,6 +146,7 @@
           this.$refs['box' + i].style.height = this.bannerList[i - 1].height + 'px'
         }
       },
+      // 点击上两个轮播图滚动
       preBanner2: function () {
         for (let i = 0; i < 2; i++) {
           this.bannerList.push(this.bannerList[0])

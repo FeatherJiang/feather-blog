@@ -60,6 +60,7 @@
       }
     },
     methods: {
+      // 侧边栏跟随滚动
       articleScroll () {
         if (window.scrollY >= 56) {
           this.fixed = true
@@ -67,9 +68,11 @@
           this.fixed = false
         }
       },
+      // 返回前一页面
       back () {
         window.history.back()
       },
+      // 添加star
       star () {
         let Vue = this
         let param = urlParse()
@@ -86,6 +89,7 @@
             })
         }
       },
+      // 添加评论
       addComment (comment) {
         this.article.commentList.push(comment)
       }

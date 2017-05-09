@@ -50,6 +50,7 @@
       }
     },
     methods: {
+      // 显示选择图片
       addImg () {
         let resultFile = this.$refs.fileImg.files[0]
         let url = null
@@ -64,8 +65,10 @@
           this.$refs.img.setAttribute('src', url)
         }
       },
+      // 添加评论
       addComment () {
         let Vue = this
+        // 禁止空表单提交
         if (this.comment.name === '' || this.comment.content === '') {
           Vue.hintShow = true
           Vue.text = 'fail'
@@ -75,12 +78,17 @@
         } else {
           let date = new Date()
           let param = urlParse()
+          // 是否存在文章id
           if (param.id !== undefined) {
             this.comment.articleId = param.id
+          } else {
+            return
           }
+          // 评论时间
           this.comment.date = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes()
           let data = new FormData()
           data.append('articleId', this.comment.articleId)
+          // 如果未添加图片使用默认图片，添加图片使用添加图片
           if (this.$refs.fileImg.value === '') {
             data.append('img', 'http://www.jiangfeather.com/images/imgAvatar.jpg')
           } else {
@@ -91,6 +99,7 @@
           data.append('content', this.comment.content)
           data.append('date', this.comment.date)
 
+          // 防止表单重复提价，取消上一个请求
           if (Vue.cancel !== null) {
             Vue.cancel()
           }

@@ -14,6 +14,7 @@
       }
     },
     methods: {
+      // 不同标签跳转不同路由
       queryTag () {
         let Vue = this
         this.$http.post('/api/getTagType', {tag: this.tag})
