@@ -31,11 +31,13 @@ const style = {
   avatar: {
     marginTop: '10px',
     marginRight: '20px',
+    marginLeft: '30px',
     lineHeight: '60px',
   },
   name: {
     verticalAlign: 'top',
     lineHeight: '60px',
+    fontWeight: 'bold',
   },
 };
 
@@ -51,7 +53,7 @@ function Profile() {
         </Col>
       </Row>
       <Row>
-        <Col xs={12} xsOffset={1}>
+        <Col xs={12}>
           <div className="author" style={style.author}>
             <Avatar src={background} style={style.avatar} />
             <span className="name" style={style.name}>feather</span>

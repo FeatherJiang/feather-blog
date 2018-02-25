@@ -6,6 +6,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import 'normalize.css';
 import Route from './router';
 import registerServiceWorker from './registerServiceWorker';
+import './styles/base.css';
 
 const muiTheme = getMuiTheme({
   fontFamily: '"Microsoft YaHei", "微软雅黑", San-serif',
