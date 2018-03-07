@@ -2,6 +2,7 @@ import React from 'react';
 import Paper from 'material-ui/Paper';
 import Avatar from 'material-ui/Avatar';
 import { Row, Col } from 'react-flexbox-grid';
+import feather from '../../assets/img/feather.jpg';
 import background from '../../assets/img/BLACK_I_desktop-1.jpg';
 
 const style = {
@@ -16,7 +17,6 @@ const style = {
   },
   img: {
     width: '100%',
-    height: '100%',
   },
   motto: {
     position: 'absolute',
@@ -55,8 +55,8 @@ function Profile() {
       <Row>
         <Col xs={12}>
           <div className="author" style={style.author}>
-            <Avatar src={background} style={style.avatar} />
-            <span className="name" style={style.name}>feather</span>
+            <Avatar src={feather} style={style.avatar} />
+            <span className="name" style={style.name}>Feather</span>
           </div>
         </Col>
       </Row>

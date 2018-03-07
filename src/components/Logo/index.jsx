@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Paper from 'material-ui/Paper';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import IconMenu from 'material-ui/IconMenu';
@@ -21,7 +22,7 @@ const style = {
   searchButton: {
     position: 'absolute',
     zIndex: '1',
-    top: '-25px',
+    top: '-28px',
     right: '10%',
   },
   searchText: {
@@ -74,7 +75,7 @@ function Logo() {
       </Row>
       <Row>
         <Col xs={7} xsOffset={1}>
-          <span style={style.name}>feather&apos;s blog</span>
+          <span style={style.name}>Feather&apos;s Blog</span>
         </Col>
         <Col xs={4}>
           <IconMenu
@@ -83,9 +84,8 @@ function Logo() {
             targetOrigin={{ horizontal: 'left', vertical: 'top' }}
             maxHeight={272}
           >
-            <MenuItem value="AL" primaryText="Alabama" />
-            <MenuItem value="AK" primaryText="Alaska" />
-            <MenuItem value="AZ" primaryText="Arizona" />
+            <Link to="/tags" href="/tags"><MenuItem primaryText="Tags" /></Link>
+            <Link to="/aboutme" href="/aboutme"><MenuItem primaryText="About Me" /></Link>
           </IconMenu>
         </Col>
       </Row>
