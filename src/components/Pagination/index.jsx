@@ -24,25 +24,25 @@ const style = {
 function Pagination(props) {
   return (
     <div className="Pagination" style={style.pagination}>
-      {
-        props.page !== 1 ?
-        (
-          <div className="pre" style={style.pre}>
-            <FloatingActionButton mini><KeyboardArrowLeftIcon /></FloatingActionButton>
-          </div>
-         ) : null
-      }
+      <div className="pre" style={style.pre}>
+        {
+          props.page !== 1 ?
+            <FloatingActionButton mini onClick={props.onClickPre}>
+              <KeyboardArrowLeftIcon />
+            </FloatingActionButton> : null
+        }
+      </div>
       <div className="pageWapper" style={style.pageWapper}>
         <span>{props.page}</span>
       </div>
-      {
-        props.count - (props.page * props.limit) > 1 ?
-        (
-          <div className="next" style={style.next}>
-            <FloatingActionButton mini><KeyboardArrowRightIcon /></FloatingActionButton>
-          </div>
-        ) : null
-      }
+      <div className="next" style={style.next}>
+        {
+          props.count - (props.page * props.limit) >= 1 ?
+            <FloatingActionButton mini onClick={props.onClickNext}>
+              <KeyboardArrowRightIcon />
+            </FloatingActionButton> : null
+        }
+      </div>
     </div>
   );
 }
@@ -51,6 +51,8 @@ Pagination.propTypes = {
   page: PropTypes.number.isRequired,
   limit: PropTypes.number.isRequired,
   count: PropTypes.number.isRequired,
+  onClickPre: PropTypes.func.isRequired,
+  onClickNext: PropTypes.func.isRequired,
 };
 
 export default Pagination;

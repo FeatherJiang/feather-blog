@@ -1,10 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import Radium from 'radium';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import ArticleOverview from '../../components/ArticleOverview';
 import Pagination from '../../components/Pagination';
+import { GETED } from '../../config/statusCode';
 import API from '../../API';
+import { toggleLoading } from '../../store/loading/action';
+import { toggleSnackbar } from '../../store/snackbar/action';
 
 const style = {
   page: {
@@ -29,10 +33,46 @@ class Page extends React.Component {
       key: '',
       articles: [],
     };
+    this.onClickPre = this.onClickPre.bind(this);
+    this.onClickNext = this.onClickNext.bind(this);
   }
 
   componentWillMount() {
-    if (this.props.match.params.type) {
+    if (this.props.location.state) {
+      this.setState({
+        key: this.props.location.state,
+      }, () => {
+        this.getArticlesData();
+      });
+    } else {
+      this.getArticlesData();
+    }
+  }
+
+  componentDidUpdate(preProps) {
+    if (JSON.stringify(preProps.match.params) !== JSON.stringify(this.props.match.params)) {
+      window.scrollTo(0, 0);
+      this.getArticlesData();
+    }
+  }
+
+  onClickPre() {
+    this.setState(preState => ({ page: preState.page - 1 }), () => {
+      this.getArticlesData();
+    });
+  }
+
+  onClickNext() {
+    this.setState(preState => ({ page: preState.page + 1 }), () => {
+      this.getArticlesData();
+    });
+  }
+
+  getArticlesData() {
+    if (this.props.match.params.number) {
+      this.setState({ page: parseInt(this.props.match.params.number, 10) });
+      this.getArticles();
+    } else if (this.props.match.params.type) {
       this.getArticlesByTypes(this.props.match.params.type);
     } else if (this.props.match.params.tag) {
       this.getArticlesByTags(this.props.match.params.tag);
@@ -40,7 +80,32 @@ class Page extends React.Component {
       this.getArticlesByArchive(`${this.props.match.params.year}/${this.props.match.params.month}`);
     }
   }
+
+  async getArticles(parameter) {
+    this.props.toggleLoading();
+    try {
+      const params = {
+        page: this.state.page,
+        limit: this.state.limit,
+        order: this.state.order,
+        key: this.state.key,
+      };
+      const result = await API.getArticles({ parameter, params });
+      if (result.statusCode === GETED) {
+        this.setState({
+          count: result.data.count,
+          articles: result.data.rows,
+        });
+      }
+      this.props.toggleLoading();
+    } catch (error) {
+      this.props.toggleLoading();
+      this.props.toggleSnackbar(error.error);
+    }
+  }
+
   async getArticlesByTypes(parameter) {
+    this.props.toggleLoading();
     try {
       const params = {
         page: this.state.page,
@@ -49,16 +114,21 @@ class Page extends React.Component {
         key: this.state.key,
       };
       const result = await API.getArticlesByTypes({ parameter, params });
-      this.setState({
-        count: result.data.count,
-        articles: result.data.rows,
-      });
+      if (result.statusCode === GETED) {
+        this.setState({
+          count: result.data.count,
+          articles: result.data.rows,
+        });
+      }
+      this.props.toggleLoading();
     } catch (error) {
-      throw error;
+      this.props.toggleLoading();
+      this.props.toggleSnackbar(error.error);
     }
   }
 
   async getArticlesByTags(parameter) {
+    this.props.toggleLoading();
     try {
       const params = {
         page: this.state.page,
@@ -67,16 +137,21 @@ class Page extends React.Component {
         key: this.state.key,
       };
       const result = await API.getArticlesByTags({ parameter, params });
-      this.setState({
-        count: result.data.count,
-        articles: result.data.rows,
-      });
+      if (result.statusCode === GETED) {
+        this.setState({
+          count: result.data.count,
+          articles: result.data.rows,
+        });
+      }
+      this.props.toggleLoading();
     } catch (error) {
-      throw error;
+      this.props.toggleLoading();
+      this.props.toggleSnackbar(error.error);
     }
   }
 
   async getArticlesByArchive(parameter) {
+    this.props.toggleLoading();
     try {
       const params = {
         page: this.state.page,
@@ -85,12 +160,16 @@ class Page extends React.Component {
         key: this.state.key,
       };
       const result = await API.getArticlesByArchive({ parameter, params });
-      this.setState({
-        count: result.data.count,
-        articles: result.data.rows,
-      });
+      if (result.statusCode === GETED) {
+        this.setState({
+          count: result.data.count,
+          articles: result.data.rows,
+        });
+      }
+      this.props.toggleLoading();
     } catch (error) {
-      throw error;
+      this.props.toggleLoading();
+      this.props.toggleSnackbar(error.error);
     }
   }
 
@@ -116,15 +195,29 @@ class Page extends React.Component {
               </Row>
               ))
           }
-          <Row style={style.gridMargin}>
-            <Col xs={12} sm={12} md={10} lg={8} xsOffset={0} smOffset={0} mdOffset={1} lgOffset={2}>
-              <Pagination
-                page={this.state.page}
-                limit={this.state.limit}
-                count={this.state.count}
-              />
-            </Col>
-          </Row>
+          {
+            !this.props.loadingData.loading ?
+              <Row style={style.gridMargin}>
+                <Col
+                  xs={12}
+                  sm={12}
+                  md={10}
+                  lg={8}
+                  xsOffset={0}
+                  smOffset={0}
+                  mdOffset={1}
+                  lgOffset={2}
+                >
+                  <Pagination
+                    page={this.state.page}
+                    limit={this.state.limit}
+                    count={this.state.count}
+                    onClickPre={this.onClickPre}
+                    onClickNext={this.onClickNext}
+                  />
+                </Col>
+              </Row> : null
+          }
         </Grid>
       </div>
     );
@@ -133,6 +226,18 @@ class Page extends React.Component {
 
 Page.propTypes = {
   match: PropTypes.objectOf(PropTypes.any).isRequired,
+  location: PropTypes.objectOf(PropTypes.any).isRequired,
+  loadingData: PropTypes.objectOf(PropTypes.bool).isRequired,
+  toggleLoading: PropTypes.func.isRequired,
+  toggleSnackbar: PropTypes.func.isRequired,
 };
 
-export default Radium(Page);
+export default connect(
+  state => ({
+    loadingData: state.loadingData,
+  }),
+  {
+    toggleLoading,
+    toggleSnackbar,
+  },
+)(Radium(Page));

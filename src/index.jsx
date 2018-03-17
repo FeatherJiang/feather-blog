@@ -1,9 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import { blue500, blue700 } from 'material-ui/styles/colors';
 import 'normalize.css';
+import store from './store';
 import registerServiceWorker from './registerServiceWorker';
 import App from './App';
 import './styles/base.css';
@@ -18,10 +20,11 @@ const muiTheme = getMuiTheme({
 });
 
 ReactDOM.render(
-
-  <MuiThemeProvider muiTheme={muiTheme}>
-    <App />
-  </MuiThemeProvider>,
+  <Provider store={store}>
+    <MuiThemeProvider muiTheme={muiTheme}>
+      <App />
+    </MuiThemeProvider>
+  </Provider>,
   document.getElementById('root'),
 );
 registerServiceWorker();

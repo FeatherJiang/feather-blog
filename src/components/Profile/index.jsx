@@ -1,9 +1,10 @@
 import React from 'react';
+import Radium from 'radium';
 import Paper from 'material-ui/Paper';
 import Avatar from 'material-ui/Avatar';
 import { Row, Col } from 'react-flexbox-grid';
 import feather from '../../assets/img/feather.jpg';
-import background from '../../assets/img/BLACK_I_desktop-1.jpg';
+import background from '../../assets/img/BlackBackground.jpg';
 
 const style = {
   paper: {
@@ -14,6 +15,9 @@ const style = {
     position: 'relative',
     height: '340px',
     overflow: 'hidden',
+    '@media (max-width: 575px)': {
+      height: '300px',
+    },
   },
   img: {
     width: '100%',
@@ -64,4 +68,4 @@ function Profile() {
   );
 }
 
-export default Profile;
+export default Radium(Profile);

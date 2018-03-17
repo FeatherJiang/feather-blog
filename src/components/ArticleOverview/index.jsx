@@ -7,7 +7,6 @@ import Avatar from 'material-ui/Avatar';
 import Chip from 'material-ui/Chip';
 import { Row, Col } from 'react-flexbox-grid';
 import feather from '../../assets/img/feather.jpg';
-import background from '../../assets/img/BLACK_I_desktop-1.jpg';
 
 const style = {
   paperWapper: {
@@ -70,6 +69,11 @@ const style = {
   },
   time: {
     margin: '0',
+    '@media (max-width: 575px)': {
+      width: '80px',
+      height: '20px',
+      overflow: 'hidden',
+    },
   },
   typeList: {
     height: '30px',
@@ -98,7 +102,7 @@ function ArticleOverview(props) {
           <Col xs={12}>
             <Link to={`/article/${props.data.aid}`} href={`/article/${props.data.aid}`}>
               <div className="img-wapper" style={style.imgWapper}>
-                <img src={background} alt="" style={style.img} />
+                <img src={props.data.banner} alt="" style={style.img} />
                 <span className="title" style={style.title}>{props.data.title}</span>
               </div>
             </Link>
@@ -121,7 +125,7 @@ function ArticleOverview(props) {
             </div>
             <div className="info" style={style.info}>
               <p style={style.name}>Feather</p>
-              <p style={style.time}>{new Date(props.data.createdAt).toLocaleDateString()}</p>
+              <p style={style.time}>{new Date(props.data.createdAt).toLocaleString()}</p>
             </div>
           </Col>
           <Col xs={4}>

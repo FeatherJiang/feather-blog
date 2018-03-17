@@ -8,31 +8,19 @@ const style = {
   },
 };
 
-export default class ArticleMarkdown extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      content: '',
-    };
-  }
-  componentWillMount() {
-    const content = Mark(this.props.source);
-    this.setState({ content });
-  }
+export default function ArticleMarkdown(props) {
   /* eslint-disable */
-  render() {
-    return (
-      <div
-        className="ArticleMarkdown"
-        style={style.articleMarkdown}
-        dangerouslySetInnerHTML={{ __html: this.state.content }}
-      />
-    );
-  }
+  return (
+    <div
+      className="ArticleMarkdown"
+      style={style.articleMarkdown}
+      dangerouslySetInnerHTML={{ __html: Mark(props.content) }}
+    />
+  );
   /* eslint-enable */
 }
 
 ArticleMarkdown.propTypes = {
-  source: PropTypes.string.isRequired,
+  content: PropTypes.string.isRequired,
 };
 

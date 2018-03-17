@@ -126,21 +126,21 @@ export default class Menu extends React.Component {
                 primaryText="www.jiangfeather.com"
                 primaryTogglesNestedList
                 nestedItems={[
-                  <a href="https://github.com/jiangfeather" target="blank" key="github">
-                    <ListItem
-                      primaryText="GitHub"
-                      leftIcon={<LinkIcon color={style.iconColor} />}
-                      style={style.listItem}
-                    />
-                  </a>,
-                  <a href="mailto:jiangfeathers@gmail.com" key="email">
-                    <ListItem
-                      primaryText="Email Me"
-                      leftIcon={<EmailIcon color={style.iconColor} />}
-                      style={style.listItem}
-                    />
-                  </a>,
-              ]}
+                  <ListItem
+                    key="git"
+                    primaryText="GitHub"
+                    leftIcon={<LinkIcon color={style.iconColor} />}
+                    style={style.listItem}
+                    containerElement={<a href="https://github.com/jiangfeather" target="blank" key="github">none</a>}
+                  />,
+                  <ListItem
+                    key="email"
+                    primaryText="Email Me"
+                    leftIcon={<EmailIcon color={style.iconColor} />}
+                    style={style.listItem}
+                    containerElement={<a href="mailto:jiangfeathers@gmail.com" key="email">none</a>}
+                  />,
+                ]}
                 rightToggle={
                   <IconButton style={style.iconButton}>
                     <KeyboardArrowDownIcon color={style.iconColor} />

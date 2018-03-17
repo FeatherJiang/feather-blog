@@ -1,8 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import Radium from 'radium';
 import { Grid, Row, Col } from 'react-flexbox-grid';
+import { GETED } from '../../config/statusCode';
 import API from '../../API';
+import { toggleLoading } from '../../store/loading/action';
+import { toggleSnackbar } from '../../store/snackbar/action';
 
 const style = {
   tags: {
@@ -44,18 +49,23 @@ class Tags extends React.Component {
   }
 
   async getTags() {
+    this.props.toggleLoading();
     try {
       const result = await API.getTags();
       let total = 0;
       result.data.forEach((item) => {
         total += item.articleCount;
       });
-      this.setState({
-        tags: result.data,
-        total,
-      });
+      if (result.statusCode === GETED) {
+        this.setState({
+          tags: result.data,
+          total,
+        });
+      }
+      this.props.toggleLoading();
     } catch (error) {
-      throw error;
+      this.props.toggleLoading();
+      this.props.toggleSnackbar(error.error);
     }
   }
 
@@ -96,4 +106,12 @@ class Tags extends React.Component {
   }
 }
 
-export default Radium(Tags);
+Tags.propTypes = {
+  toggleLoading: PropTypes.func.isRequired,
+  toggleSnackbar: PropTypes.func.isRequired,
+};
+
+export default connect(null, {
+  toggleLoading,
+  toggleSnackbar,
+})(Radium(Tags));
