@@ -5,7 +5,7 @@ let baseURL;
 if (process.env.NODE_ENV === 'development') {
   baseURL = '//localhost:8080/api';
 } else {
-  baseURL = '//www.jiangfeather.com/api';
+  baseURL = '/api';
 }
 
 export default { baseURL };
