@@ -8,7 +8,7 @@ import 'normalize.css';
 import store from './store';
 import registerServiceWorker from './registerServiceWorker';
 import App from './App';
-import './styles/base.css';
+import './assets/styles/base.css';
 
 const muiTheme = getMuiTheme({
   fontFamily: '"Microsoft YaHei", "微软雅黑", San-serif',
