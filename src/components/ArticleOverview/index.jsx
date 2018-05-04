@@ -6,6 +6,7 @@ import Paper from 'material-ui/Paper';
 import Avatar from 'material-ui/Avatar';
 import Chip from 'material-ui/Chip';
 import { Row, Col } from 'react-flexbox-grid';
+import config from '../../config';
 import feather from '../../assets/img/feather.jpg';
 
 const style = {
@@ -76,16 +77,16 @@ const style = {
     },
   },
   typeList: {
-    height: '30px',
-    padding: '15px 0',
-    paddingRight: '30px',
+    height: '60px',
     overflow: 'hidden',
   },
   typeWapper: {
     float: 'right',
+    margin: '15px 0',
   },
   type: {
     height: '30px',
+    margin: '0 5px',
     lineHeight: '30px',
     cursor: 'pointer',
   },
@@ -102,8 +103,10 @@ function ArticleOverview(props) {
           <Col xs={12}>
             <Link to={`/article/${props.data.aid}`} href={`/article/${props.data.aid}`}>
               <div className="img-wapper" style={style.imgWapper}>
-                <img src={props.data.banner} alt="" style={style.img} />
-                <span className="title" style={style.title}>{props.data.title}</span>
+                <img src={config.baseURL + props.data.banner} alt="" style={style.img} />
+                <span className="title" style={style.title}>
+                  {props.data.title}
+                </span>
               </div>
             </Link>
           </Col>
@@ -130,18 +133,18 @@ function ArticleOverview(props) {
           </Col>
           <Col xs={4}>
             <div className="typeList" style={style.typeList}>
-              {
-                props.data.types.map(type => (
-                  <Link to={`/types/${type.name}`} href={`/types/${type.name}`} style={style.typeWapper} key={type.tid}>
-                    <Chip
-                      style={style.type}
-                      labelStyle={style.type}
-                    >
-                      {type.name}
-                    </Chip>
-                  </Link>
-                  ))
-              }
+              {props.data.types.map(type => (
+                <Link
+                  to={`/types/${type.name}`}
+                  href={`/types/${type.name}`}
+                  style={style.typeWapper}
+                  key={type.tid}
+                >
+                  <Chip style={style.type} labelStyle={style.type}>
+                    {type.name}
+                  </Chip>
+                </Link>
+              ))}
             </div>
           </Col>
         </Row>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import Home from '../views/Home';
 import Page from '../views/Page';
 import Article from '../views/Article';
@@ -17,7 +17,6 @@ function App() {
       <Route path="/tags" exact component={Tags} />
       <Route path="/tags/:tag" exact component={Page} />
       <Route path="/aboutme" exact component={AboutMe} />
-      <Redirect to="/" />
     </Switch>
   );
 }

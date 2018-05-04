@@ -7,6 +7,7 @@ import IconButton from 'material-ui/IconButton';
 import ReplyIcon from 'material-ui/svg-icons/content/reply';
 import { Row, Col } from 'react-flexbox-grid';
 
+import config from '../../config';
 import CommentForm from '../CommentForm';
 import { setCommentId } from '../../store/comment/action';
 
@@ -46,19 +47,19 @@ class CommentItem extends React.Component {
       <Paper className="commentItem" style={style.commentItem}>
         <Row>
           <Col xs={2} sm={1}>
-            <Avatar src={this.props.avatar} />
+            <Avatar src={config.baseURL + this.props.avatar} />
           </Col>
           <Col xs={8} sm={10}>
             <div className="commentInfo">
-              <span className="name" style={style.name}>{this.props.name}</span>
+              <span className="name" style={style.name}>
+                {this.props.name}
+              </span>
               <span className="time" style={style.time}>
                 {new Date(this.props.createdAt).toLocaleString()}
               </span>
             </div>
             <div className="comment">
-              <span>
-                {this.props.content}
-              </span>
+              <span>{this.props.content}</span>
             </div>
           </Col>
           <Col xs={2} sm={1}>
@@ -67,9 +68,11 @@ class CommentItem extends React.Component {
             </IconButton>
           </Col>
         </Row>
-        {
-          this.props.children.map(item => (<Row key={item}><Col xs={12}>{item}</Col></Row>))
-        }
+        {this.props.children.map(item => (
+          <Row key={item}>
+            <Col xs={12}>{item}</Col>
+          </Row>
+        ))}
         <Row>
           <Col xs={12}>
             <CommentForm aid={this.props.aid} pid={this.state.cid} />

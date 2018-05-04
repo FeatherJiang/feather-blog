@@ -9,6 +9,7 @@ import ArticleHeader from '../../components/ArticleHeader';
 import ArticleMarkdown from '../../components/ArticleMarkdown';
 import ArticleFooter from '../../components/ArticleFooter';
 import ArticleComment from '../../components/ArticleComment';
+import config from '../../config';
 import { GETED } from '../../config/statusCode';
 import API from '../../API';
 import { toggleLoading } from '../../store/loading/action';
@@ -75,7 +76,7 @@ class Article extends React.Component {
             <Col xs={12} sm={12} md={10} lg={8} xsOffset={0} smOffset={0} mdOffset={1} lgOffset={2}>
               <Paper style={style.paper}>
                 <ArticleHeader
-                  banner={this.state.banner}
+                  banner={config.baseURL + this.state.banner}
                   title={this.state.title}
                   createdAt={this.state.createdAt}
                   types={this.state.types}

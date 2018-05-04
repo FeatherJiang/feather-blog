@@ -7,8 +7,10 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import LinearProgress from 'material-ui/LinearProgress';
 import { Row, Col } from 'react-flexbox-grid';
+import config from '../../config';
 import { CREATED } from '../../config/statusCode';
 import API from '../../API';
+import { toggleSnackbar } from '../../store/snackbar/action';
 
 const style = {
   commentForm: {
@@ -41,7 +43,7 @@ class CommentForm extends React.Component {
   constructor() {
     super();
     this.state = {
-      avatar: '/api/v1/imgs/default/anonymous-avatar.png',
+      avatar: `${config.baseURL}/v1/imgs/default/anonymous-avatar.png`,
       name: '',
       email: '',
       content: '',
@@ -90,7 +92,7 @@ class CommentForm extends React.Component {
     }
     const json = {
       pid: this.props.pid,
-      avatar: this.state.avatar,
+      avatar: this.state.avatar.replace(config.baseURL, ''),
       name: this.state.name || 'anonymous',
       email: this.state.email,
       content: this.state.content,
@@ -98,9 +100,15 @@ class CommentForm extends React.Component {
     try {
       const result = await API.postComment({ parameter: this.props.aid, data: json });
       if (result.statusCode === CREATED) {
-        setTimeout(() => {
-          this.setState({ loading: false });
-        }, 1500);
+        this.props.refresh();
+        this.props.toggleSnackbar('add success');
+        this.setState({
+          avatar: `${config.baseURL}/v1/imgs/default/anonymous-avatar.png`,
+          name: '',
+          email: '',
+          content: '',
+          loading: false,
+        });
       }
     } catch (error) {
       throw error;
@@ -124,6 +132,7 @@ class CommentForm extends React.Component {
                 floatingLabelText="name"
                 hintText="optional"
                 errorText=""
+                value={this.state.name}
                 onChange={(e, text) => {
                   this.setState({ name: text });
                 }}
@@ -133,6 +142,7 @@ class CommentForm extends React.Component {
                 floatingLabelText="email"
                 hintText="optional"
                 errorText=""
+                value={this.state.email}
                 onChange={(e, text) => {
                   this.setState({ email: text });
                 }}
@@ -148,6 +158,7 @@ class CommentForm extends React.Component {
                   floatingLabelText="comment"
                   hintText="required"
                   errorText={this.state.commentError}
+                  value={this.state.content}
                   onChange={(e, text) => {
                     if (text === '') {
                       this.setState({ commentError: 'comment required' });
@@ -169,9 +180,7 @@ class CommentForm extends React.Component {
                 />
               </div>
             </Col>
-            <Col xs={12}>
-              {this.state.loading ? <LinearProgress mode="indeterminate" /> : null}
-            </Col>
+            <Col xs={12}>{this.state.loading ? <LinearProgress mode="indeterminate" /> : null}</Col>
           </Row>
         </Paper>
       );
@@ -183,9 +192,16 @@ class CommentForm extends React.Component {
 CommentForm.propTypes = {
   aid: PropTypes.number.isRequired,
   pid: PropTypes.number.isRequired,
+  refresh: PropTypes.func, // eslint-disable-line
   commentData: PropTypes.objectOf(PropTypes.number).isRequired,
+  toggleSnackbar: PropTypes.func.isRequired,
 };
 
-export default connect(state => ({
-  commentData: state.commentData,
-}))(CommentForm);
+export default connect(
+  state => ({
+    commentData: state.commentData,
+  }),
+  {
+    toggleSnackbar,
+  },
+)(CommentForm);

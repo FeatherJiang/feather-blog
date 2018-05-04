@@ -30,6 +30,7 @@ class ArticleComment extends React.Component {
     };
     this.onClickPre = this.onClickPre.bind(this);
     this.onClickNext = this.onClickNext.bind(this);
+    this.getComments = this.getComments.bind(this, props.aid);
   }
 
   componentWillMount() {
@@ -116,7 +117,11 @@ class ArticleComment extends React.Component {
         <Row>
           <Col xs={12}>
             <div className="CommentFormWapper" style={style.commentWapper}>
-              <CommentForm aid={this.props.aid} pid={0} />
+              <CommentForm
+                aid={this.props.aid}
+                pid={0}
+                refresh={this.getComments}
+              />
             </div>
           </Col>
           <Col xs={12}>
