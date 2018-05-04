@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Radium from 'radium';
+import Paper from 'material-ui/Paper';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import ArticleOverview from '../../components/ArticleOverview';
 import Pagination from '../../components/Pagination';
@@ -19,6 +20,10 @@ const style = {
   },
   gridMargin: {
     marginBottom: '40px',
+  },
+  paper: {
+    padding: '10px 0',
+    textAlign: 'center',
   },
 };
 
@@ -39,11 +44,14 @@ class Page extends React.Component {
 
   componentWillMount() {
     if (this.props.location.state) {
-      this.setState({
-        key: this.props.location.state,
-      }, () => {
-        this.getArticlesData();
-      });
+      this.setState(
+        {
+          key: this.props.location.state,
+        },
+        () => {
+          this.getArticlesData();
+        },
+      );
     } else {
       this.getArticlesData();
     }
@@ -57,15 +65,21 @@ class Page extends React.Component {
   }
 
   onClickPre() {
-    this.setState(preState => ({ page: preState.page - 1 }), () => {
-      this.getArticlesData();
-    });
+    this.setState(
+      preState => ({ page: preState.page - 1 }),
+      () => {
+        this.getArticlesData();
+      },
+    );
   }
 
   onClickNext() {
-    this.setState(preState => ({ page: preState.page + 1 }), () => {
-      this.getArticlesData();
-    });
+    this.setState(
+      preState => ({ page: preState.page + 1 }),
+      () => {
+        this.getArticlesData();
+      },
+    );
   }
 
   getArticlesData() {
@@ -177,47 +191,60 @@ class Page extends React.Component {
     return (
       <div className="Page" style={style.page}>
         <Grid fluid>
-          {
-            this.state.articles.map(article => (
-              <Row style={style.gridMargin} key={article.aid}>
-                <Col
-                  xs={12}
-                  sm={12}
-                  md={10}
-                  lg={8}
-                  xsOffset={0}
-                  smOffset={0}
-                  mdOffset={1}
-                  lgOffset={2}
-                >
-                  <ArticleOverview data={article} />
-                </Col>
-              </Row>
-              ))
-          }
-          {
-            !this.props.loadingData.loading ?
-              <Row style={style.gridMargin}>
-                <Col
-                  xs={12}
-                  sm={12}
-                  md={10}
-                  lg={8}
-                  xsOffset={0}
-                  smOffset={0}
-                  mdOffset={1}
-                  lgOffset={2}
-                >
-                  <Pagination
-                    page={this.state.page}
-                    limit={this.state.limit}
-                    count={this.state.count}
-                    onClickPre={this.onClickPre}
-                    onClickNext={this.onClickNext}
-                  />
-                </Col>
-              </Row> : null
-          }
+          {this.state.articles.map(article => (
+            <Row style={style.gridMargin} key={article.aid}>
+              <Col
+                xs={12}
+                sm={12}
+                md={10}
+                lg={8}
+                xsOffset={0}
+                smOffset={0}
+                mdOffset={1}
+                lgOffset={2}
+              >
+                <ArticleOverview data={article} />
+              </Col>
+            </Row>
+          ))}
+          {!this.props.loadingData.loading && this.state.count === 0 ? (
+            <Row>
+              <Col
+                xs={12}
+                sm={12}
+                md={10}
+                lg={8}
+                xsOffset={0}
+                smOffset={0}
+                mdOffset={1}
+                lgOffset={2}
+              >
+                <Paper style={style.paper}>no more</Paper>
+              </Col>
+            </Row>
+          ) : null}
+          {!this.props.loadingData.loading ? (
+            <Row style={style.gridMargin}>
+              <Col
+                xs={12}
+                sm={12}
+                md={10}
+                lg={8}
+                xsOffset={0}
+                smOffset={0}
+                mdOffset={1}
+                lgOffset={2}
+              >
+                <Pagination
+                  page={this.state.page}
+                  limit={this.state.limit}
+                  count={this.state.count}
+                  onClickPre={this.onClickPre}
+                  onClickNext={this.onClickNext}
+                />
+              </Col>
+            </Row>
+          ) : null}
         </Grid>
       </div>
     );

@@ -33,7 +33,7 @@ function Pagination(props) {
         }
       </div>
       <div className="pageWapper" style={style.pageWapper}>
-        <span>{props.page}</span>
+        <span>{props.count === 0 ? '' : props.page}</span>
       </div>
       <div className="next" style={style.next}>
         {
