@@ -43,7 +43,7 @@ class CommentForm extends React.Component {
   constructor() {
     super();
     this.state = {
-      avatar: `${config.baseURL}/v1/imgs/default/anonymous-avatar.png`,
+      avatar: '/v1/imgs/default/anonymous-avatar.png',
       name: '',
       email: '',
       content: '',
