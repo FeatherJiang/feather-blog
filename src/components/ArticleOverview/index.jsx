@@ -10,12 +10,6 @@ import config from '../../config';
 import feather from '../../assets/img/feather.jpg';
 
 const style = {
-  paperWapper: {
-    height: '400px',
-    '@media (max-width: 575px)': {
-      height: '320px',
-    },
-  },
   paper: {
     overflow: 'hidden',
   },
@@ -38,16 +32,16 @@ const style = {
     fontSize: '30px',
   },
   overview: {
-    height: '60px',
-    paddingLeft: '30px',
+    padding: '20px',
     borderBottom: '1px solid #eee',
   },
   overviewText: {
-    lineHeight: '60px',
+    lineHeight: '26px',
   },
   readLink: {
     display: 'inline-block',
     marginLeft: '30px',
+    color: 'rgb(33, 150, 243)',
   },
   avatarWapper: {
     display: 'inline-block',

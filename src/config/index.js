@@ -3,7 +3,7 @@
  */
 let baseURL;
 if (process.env.NODE_ENV === 'development') {
-  baseURL = 'http://localhost:8080/api';
+  baseURL = 'http://www.jiangfeather.com/api';
 } else {
   baseURL = '/api';
 }
