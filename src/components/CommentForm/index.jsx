@@ -92,7 +92,7 @@ class CommentForm extends React.Component {
     }
     const json = {
       pid: this.props.pid,
-      avatar: this.state.avatar.replace(config.baseURL, ''),
+      avatar: this.state.avatar,
       name: this.state.name || 'anonymous',
       email: this.state.email,
       content: this.state.content,
@@ -103,7 +103,7 @@ class CommentForm extends React.Component {
         this.props.refresh();
         this.props.toggleSnackbar('add success');
         this.setState({
-          avatar: `${config.baseURL}/v1/imgs/default/anonymous-avatar.png`,
+          avatar: '/v1/imgs/default/anonymous-avatar.png',
           name: '',
           email: '',
           content: '',
@@ -122,7 +122,7 @@ class CommentForm extends React.Component {
           <Row>
             <Col xs={12} sm={2} md={2} lg={1}>
               <div className="avatarWapper" style={style.avatarWapper} title="点击上传头像">
-                <Avatar src={this.state.avatar} />
+                <Avatar src={config.baseURL + this.state.avatar} />
                 <input type="file" style={style.avatarUpload} onChange={this.uploadImg} />
               </div>
             </Col>
