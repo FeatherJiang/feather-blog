@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import { Row, Col } from 'react-flexbox-grid';
 import LinearProgress from 'material-ui/LinearProgress';
 
-import CommentForm from '../CommentForm';
-import CommentItem from '../CommentItem';
+import CommentForm from '../../components/CommentForm';
+import CommentItem from '../../components/CommentItem';
 import Pagination from '../../components/Pagination';
 import { GETED } from '../../config/statusCode';
 import API from '../../API';
